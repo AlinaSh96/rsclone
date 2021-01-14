@@ -1,7 +1,15 @@
 import '@styles/styles.scss';
+import GameController from '@controller/GameController';
+import AppView from '@view/AppView';
 
 export default class App {
+  constructor() {
+    this.appView = new AppView();
+    this.gameController = new GameController();
+  }
+
   start() {
-    document.querySelector('body').innerHTML = '<h1>Hello World!</h1>';
+    this.appView.render();
+    this.gameController.start();
   }
 }
