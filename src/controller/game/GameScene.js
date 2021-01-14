@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import {GAME_OPTIONS, GAME_IMGS} from '@constants/general.const';
+import {getBestScore, setBestScore} from '@utils/StorageUtils';
 
 // The GameScene class holds a game scene
 export default class GameScene extends Phaser.Scene {
@@ -32,8 +33,7 @@ export default class GameScene extends Phaser.Scene {
     this.physics.world.on('worldbounds', this.die, this);// When touching world bounds
 
     this.score = 0;
-    this.topScore = localStorage.getItem(GAME_OPTIONS.localStorageName) == null ? 0
-      : localStorage.getItem(GAME_OPTIONS.localStorageName);
+    this.topScore = getBestScore();
     this.scoreText = this.add.text(10, 10, '');
     this.updateScore(this.score);
   }
@@ -73,7 +73,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   die() {
-    localStorage.setItem(GAME_OPTIONS.localStorageName, Math.max(this.score, this.topScore));
+    setBestScore(Math.max(this.score, this.topScore));
     this.scene.start('PlayGame');
   }
 }
