@@ -1,4 +1,5 @@
-import App from '@controller/AppController';
+import Phaser from 'phaser';
+import {gameConfig} from './game';
 
-const app = new App();
-app.start();
+// eslint-disable-next-line no-unused-vars
+const game = new Phaser.Game(gameConfig); // Start Phaser
