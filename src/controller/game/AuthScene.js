@@ -1,6 +1,6 @@
-import {APP_CONFIG, APP_FONTS} from '@constants/general.const';
 import AuthController from '@controller/AuthController';
 import {changeScene} from '@utils/CommonUtils';
+import {addKeyHandler, createSettingsBtn, createTitleText} from '@utils/ComponentUtils';
 
 const AUTH_FORM_WIDTH_PERCENT = 0.6;
 
@@ -20,18 +20,8 @@ export default class AuthScene extends Phaser.Scene {
 
   create() {
     console.log('AuthScene >>> create');
-    this.titleText = this.add.text(
-      this.width / 2,
-      this.height / 4,
-      APP_CONFIG.title,
-      APP_FONTS.title
-    ).setOrigin(0.5, 0);
-
-    this.settingsBtn = this.add.image(
-      APP_CONFIG.edgeMargin,
-      APP_CONFIG.edgeMargin,
-      'settings'
-    ).setOrigin(0, 0);
+    createSettingsBtn(this, this.onSettingsBtnClick.bind(this));
+    createTitleText(this);
 
     this.authController = new AuthController();
     this.authController.start({
@@ -39,30 +29,35 @@ export default class AuthScene extends Phaser.Scene {
       login: this.login.bind(this)
     });
 
-    this._addEventListeners();
+    addKeyHandler(this, this._handleKey.bind(this));
   }
 
-  _addEventListeners() {
-    this.settingsBtn
-      .setInteractive({useHandCursor: true})
-      .on('pointerdown', () => {
-        changeScene('SettingsScene', this, {scene: 'AuthScene'});
-        this.authController.stop();
-      })
-      .on('pointerover', function () {
-        this.setFrame(1);
-      })
-      .on('pointerout', function () {
-        this.setFrame(0);
-      });
-    this.titleText
-      .setInteractive()
-      .on('pointerover', function () {
-        this.setStyle(APP_FONTS.baseHover);
-      })
-      .on('pointerout', function () {
-        this.setStyle(APP_FONTS.title);
-      });
+  _handleKey(e) {
+    switch (e.code) {
+      case 'KeyS': {
+        this.onSettingsBtnClick();
+        break;
+      }
+      case 'Space': {
+        this.login();
+        break;
+      }
+      default:
+        break;
+    }
+  }
+
+  onSettingsBtnClick() {
+    changeScene('SettingsScene', this, {scene: 'AuthScene'});
+    this.authController.stop();
+  }
+
+  getWidth() {
+    return this.width;
+  }
+
+  getHeight() {
+    return this.height;
   }
 
   calculateAuthFormWidth() {

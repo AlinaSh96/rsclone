@@ -6,8 +6,9 @@ export const APP_CONFIG = {
   assetsPackPath: `${assetsFolderPath}pack.json`,
   sceneChangeDuration: 150,
   maxWidth: 720,
-  maxHeight: 1280,
-  edgeMargin: 10
+  maxHeight: 1080,
+  edgeMargin: 10,
+  animationDuration: 300
 };
 
 export const COLORS = {
@@ -24,21 +25,24 @@ export const COLORS = {
   loadingBar_: '#6FBBD3',
   progressBar: 0xFFB6C1,
   progressBar_: '#FFB6C1',
-  textMain: '#2DADD5',
-  textMainDarker: '#007AA3',
+  textMain: '#007AA3',
+  // textMainDarker: '#007AA3',
   textFocus: '#90EE90',
+  // textFocusDarker: '#4ee44e',
+  textFocusDarker: '#20D420',
   textMainBorder: '#FFB6C1',
-  // textMainBorder: '#90EE90',
+  textMainBorderDarker: '#FF4B69',
   textSimple: '#000000',
   textSimpleBorder: '#FFFFFF',
+  strokeBase: '#000000'
 }
 
 export const GAME_OPTIONS = {
-  birdGravity: 800,
-  birdSpeed: 125,
+  birdGravity: 1000,
+  birdSpeed: 200,
   minPipeHeight: 50,
   pipeHole: [100, 130],
-  birdFlapPower: 300, // flap thrust
+  birdFlapPower: 400, // flap thrust
   localStorageName: 'bestFlappyScore'
 };
 
@@ -47,16 +51,37 @@ export const GAME_IMGS = {
   pipe: `${imagesFolderPath}pipe.png`
 };
 
-const fontFamily = 'Source Sans Pro';
+const fontFamily = '\"Potta One\"';
+
+export const AUTHORS = [
+  {
+    name: 'Alina',
+    gitHub: 'https://github.com/AlinaSh96'
+  },
+  {
+    name: 'Anastasia',
+    gitHub: 'https://github.com/ivanova-anastasia'
+  },
+  {
+    name: 'Yevgeniya',
+    gitHub: 'https://github.com/yevgeniya-a'
+  }
+];
+
+export const RSS_LINK = 'https://rs.school/js';
 
 export const APP_FONTS = {
   title: {
     fontFamily,
     fontSize: 50,
-    fill: COLORS.textMain,
-    stroke: COLORS.textMainBorder,
-    strokeThickness: 6,
+    fill: COLORS.textFocus,
+    stroke: COLORS.textMain,
+    strokeThickness: 8,
     align: 'center'
+  },
+  titleHover: {
+    stroke: COLORS.textFocus,
+    fill: COLORS.textMain,
   },
   base: {
     fontFamily,
@@ -67,13 +92,27 @@ export const APP_FONTS = {
     align: 'center'
   },
   baseHover: {
-    fill: COLORS.textMainDarker,
     stroke: COLORS.textFocus
+  },
+  small: {
+    fontFamily,
+    fontSize: 30,
+    fill: COLORS.textMain,
+    stroke: COLORS.textMainBorder,
+    strokeThickness: 4,
+    align: 'center'
   },
   simple: {
     fontFamily,
-    fontSize: 16,
-    fill: COLORS.textMainDarker,
+    fontSize: 22,
+    fill: COLORS.textMain,
+    stroke: COLORS.textMainBorder,
+    strokeThickness: 5,
     align: 'center'
+  },
+  simpleHover: {
+    fill: COLORS.textMain,
+    stroke: COLORS.textMainBorder,
+    strokeThickness: 5,
   }
 }

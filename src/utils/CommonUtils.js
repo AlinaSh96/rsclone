@@ -36,7 +36,7 @@ export const changeScene = (newSceneName, curScene, data) => {
     APP_CONFIG.sceneChangeDuration,
     COLORS.fadeBckg.red,
     COLORS.fadeBckg.green,
-    COLORS.fadeBckg.blue,
+    COLORS.fadeBckg.blue
   );
   curScene.time.addEvent({
     delay: APP_CONFIG.sceneChangeDuration,
@@ -46,3 +46,5 @@ export const changeScene = (newSceneName, curScene, data) => {
     callbackScope: curScene
   });
 };
+
+export const getRandomNumber = (a, b) => Math.floor(Math.random() * b) + a;

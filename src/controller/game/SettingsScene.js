@@ -1,9 +1,11 @@
-import {APP_CONFIG, APP_FONTS, COLORS} from '@constants/general.const';
-import {getBestScore} from '@utils/StorageUtils';
-import {changeScene, createElement} from '@utils/CommonUtils';
+import {APP_CONFIG, APP_FONTS} from '@constants/general.const';
+import {changeScene} from '@utils/CommonUtils';
+import {scaleUp, createBackBtn, createBtn, createHeadingText, addKeyHandler} from '@utils/ComponentUtils';
 
-const BACK_TEXT = 'Back';
+const HEADING_TEXT = 'Settings';
 const DEFAULT_REDIRECT_SCENE = 'AuthScene';
+const MARGIN_LEFT = 60;
+const MARGIN_BOTTOM = 50;
 
 export default class SettingsScene extends Phaser.Scene {
   constructor() {
@@ -22,33 +24,119 @@ export default class SettingsScene extends Phaser.Scene {
 
   create() {
     console.log('SettingsScene >>> create');
-    this.backBtn = this.add.image(
-      APP_CONFIG.edgeMargin * 2,
-      APP_CONFIG.edgeMargin * 2,
-      'back'
-    ).setOrigin(0, 0);
+    createBackBtn(this, this.onBackBtnClick.bind(this));
+    createHeadingText(this, HEADING_TEXT);
+    this._createMenuList();
 
-    this.add.text(
-      this.sys.canvas.width / 2,
-      this.sys.canvas.height / 4,
-      'Not implemented!',
-      APP_FONTS.title
-    ).setOrigin(0.5, 0);
-
-    this._addEventListeners();
+    addKeyHandler(this, this._handleKey.bind(this));
   }
 
-  _addEventListeners() {
-    this.backBtn
-      .setInteractive({useHandCursor: true})
-      .on('pointerdown', () => {
-        changeScene(this.redirectScene, this);
-      })
-      .on('pointerover', function () {
-        this.setFrame(1);
-      })
-      .on('pointerout', function () {
-        this.setFrame(0);
+  _handleKey(e) {
+    switch (e.code) {
+      case 'KeyA': {
+        this.onAuthorsBtnClick();
+        break;
+      }
+      case 'KeyS':
+      case 'Backspace': {
+        this.onBackBtnClick();
+        break;
+      }
+      case 'KeyK': {
+        this.onShortcutsBtnClick();
+        break;
+      }
+      case 'KeyM': {
+        this.onMusicBtnClick();
+        break;
+      }
+      case 'KeyV': {
+        this.onSoundBtnClick();
+        break;
+      }
+      default:
+        break;
+    }
+  }
+
+  _createMenuList() {
+    const offsetLeft = this.width / 4;
+    let offsetTop = this.height / 4;
+    const menuList = [
+      {
+        name: 'soundOn',//todo should be dependant on app value
+        text: 'Sound: ON',//todo should be dependant on app value
+        onClick: this.onSoundBtnClick.bind(this)
+      },
+      {
+        name: 'musicOn',//todo should be dependant on app value
+        text: 'Music: ON',//todo should be dependant on app value
+        onClick: this.onMusicBtnClick.bind(this)
+      },
+      {
+        name: 'authors',
+        text: 'Authors',
+        onClick: this.onAuthorsBtnClick.bind(this)
+      },
+      {
+        name: 'shortcuts',
+        text: 'Shortcuts',
+        onClick: this.onShortcutsBtnClick.bind(this)
+      }
+    ].map(({name, onClick, text}) => {
+      const btn = createBtn({
+        x: offsetLeft,
+        y: offsetTop,
+        name,
+        scene: this,
+        onClick,
+        originY: 0.5,
+        originX: 0.5
       });
+      const btnText = this.add.text(
+        offsetLeft + MARGIN_LEFT,
+        offsetTop,
+        text,
+        APP_FONTS.base
+      ).setOrigin(0, 0.5)
+        .setInteractive({useHandCursor: true})
+        .on('pointerup', onClick)
+        .on('pointerover', function () {
+          this.setStyle(APP_FONTS.baseHover);
+        })
+        .on('pointerout', function () {
+          this.setStyle(APP_FONTS.base);
+        });
+      offsetTop += btn.height + MARGIN_BOTTOM;
+      return {
+        btn,
+        btnText
+      };
+    });
+
+    menuList.forEach(({btn, btnText}) => {
+      scaleUp(this, btn);
+      scaleUp(this, btnText);
+    });
+  }
+
+  onBackBtnClick() {
+    changeScene(this.redirectScene, this);
+  }
+
+  onSoundBtnClick() {
+
+  }
+
+  onMusicBtnClick() {
+
+  }
+
+  onAuthorsBtnClick() {
+    changeScene('AuthorsScene', this);
+  }
+
+  onShortcutsBtnClick() {
+    changeScene('ShortcutsScene', this);
   }
 }

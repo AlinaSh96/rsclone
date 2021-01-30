@@ -1,5 +1,6 @@
 import {APP_CONFIG, COLORS} from '@constants/general.const';
 import {changeScene} from '@utils/CommonUtils';
+import WebFont from 'webfontloader';
 
 const LOADING_BAR = {
   height: 20,
@@ -41,7 +42,6 @@ export default class BootScene extends Phaser.Scene {
   }
 
   _createProgressBar(v) {
-    console.log('_createProgressBar', v);
     this.progressBar.clear();
     this.progressBar.fillStyle(COLORS.progressBar, 1);
     this.progressBar.fillRect(
@@ -70,7 +70,7 @@ export default class BootScene extends Phaser.Scene {
   }
 
   _loadAssets() {
-    // todo load out package
+    WebFont.load({google: {families: ['Potta One']}});
     this.load.pack('preload', APP_CONFIG.assetsPackPath, 'preload');
   }
 }
