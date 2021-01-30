@@ -1,9 +1,7 @@
-import {APP_CONFIG, APP_FONTS, COLORS} from '@constants/general.const';
+import {APP_CONFIG, APP_FONTS} from '@constants/general.const';
 import AuthController from '@controller/AuthController';
 import {changeScene} from '@utils/CommonUtils';
 
-const SETTINGS_TEXT = 'Settings';
-const EDGE_MARGIN = 10;
 const AUTH_FORM_WIDTH_PERCENT = 0.6;
 
 export default class AuthScene extends Phaser.Scene {
@@ -22,18 +20,17 @@ export default class AuthScene extends Phaser.Scene {
 
   create() {
     console.log('AuthScene >>> create');
-    this.add.text(
+    this.titleText = this.add.text(
       this.width / 2,
       this.height / 4,
       APP_CONFIG.title,
       APP_FONTS.title
     ).setOrigin(0.5, 0);
 
-    this.settingsText = this.add.text(
-      EDGE_MARGIN,
-      EDGE_MARGIN,
-      SETTINGS_TEXT,
-      APP_FONTS.base
+    this.settingsBtn = this.add.image(
+      APP_CONFIG.edgeMargin,
+      APP_CONFIG.edgeMargin,
+      'settings'
     ).setOrigin(0, 0);
 
     this.authController = new AuthController();
@@ -46,17 +43,25 @@ export default class AuthScene extends Phaser.Scene {
   }
 
   _addEventListeners() {
-    this.settingsText
+    this.settingsBtn
       .setInteractive({useHandCursor: true})
+      .on('pointerdown', () => {
+        changeScene('SettingsScene', this, {scene: 'AuthScene'});
+        this.authController.stop();
+      })
+      .on('pointerover', function () {
+        this.setFrame(1);
+      })
+      .on('pointerout', function () {
+        this.setFrame(0);
+      });
+    this.titleText
+      .setInteractive()
       .on('pointerover', function () {
         this.setStyle(APP_FONTS.baseHover);
       })
       .on('pointerout', function () {
-        this.setStyle(APP_FONTS.base);
-      })
-      .on('pointerdown', () => {
-        changeScene('SettingsScene', this, {scene: 'AuthScene'});
-        this.authController.stop();
+        this.setStyle(APP_FONTS.title);
       });
   }
 

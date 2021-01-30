@@ -24,6 +24,24 @@
           "frameWidth": 20,
           "frameHeight": 20
         }
+      },
+      {
+        "type": "spritesheet",
+        "key": "settings",
+        "url": "./assets/icons/settings.png",
+        "frameConfig": {
+          "frameWidth": 70,
+          "frameHeight": 70
+        }
+      },
+      {
+        "type": "spritesheet",
+        "key": "back",
+        "url": "./assets/icons/back.png",
+        "frameConfig": {
+          "frameWidth": 64,
+          "frameHeight": 44
+        }
       }
     ]
   }

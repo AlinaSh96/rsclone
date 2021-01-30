@@ -22,11 +22,10 @@ export default class SettingsScene extends Phaser.Scene {
 
   create() {
     console.log('SettingsScene >>> create');
-    this.backText = this.add.text(//todo replace with btn
-      APP_CONFIG.edgeMargin,
-      APP_CONFIG.edgeMargin,
-      BACK_TEXT,
-      APP_FONTS.base
+    this.backBtn = this.add.image(
+      APP_CONFIG.edgeMargin * 2,
+      APP_CONFIG.edgeMargin * 2,
+      'back'
     ).setOrigin(0, 0);
 
     this.add.text(
@@ -40,16 +39,16 @@ export default class SettingsScene extends Phaser.Scene {
   }
 
   _addEventListeners() {
-    this.backText
+    this.backBtn
       .setInteractive({useHandCursor: true})
-      .on('pointerover', function () {
-        this.setStyle(APP_FONTS.baseHover);
-      })
-      .on('pointerout', function () {
-        this.setStyle(APP_FONTS.base);
-      })
       .on('pointerdown', () => {
         changeScene(this.redirectScene, this);
+      })
+      .on('pointerover', function () {
+        this.setFrame(1);
+      })
+      .on('pointerout', function () {
+        this.setFrame(0);
       });
   }
 }
