@@ -5,6 +5,7 @@ import {
   createSettingsBtn,
   createTitleText,
 } from '@utils/ComponentUtils';
+import { setBestScore } from '@utils/StorageUtils';
 
 const AUTH_FORM_WIDTH_PERCENT = 0.6;
 
@@ -70,6 +71,7 @@ export default class AuthScene extends Phaser.Scene {
   }
 
   login(data) {
+    setBestScore(data.score);
     changeScene('MenuScene', this, data);
     this.authController.stop();
   }

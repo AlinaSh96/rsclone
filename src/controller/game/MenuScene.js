@@ -1,14 +1,16 @@
-import {APP_CONFIG, APP_FONTS, RSS_LINK} from '@constants/general.const';
-import {getBestScore} from '@utils/StorageUtils';
-import {changeScene} from '@utils/CommonUtils';
+import { APP_CONFIG, APP_FONTS, RSS_LINK } from '@constants/general.const';
+import { getBestScore } from '@utils/StorageUtils';
+import { changeScene } from '@utils/CommonUtils';
 import {
   addJumpingAnimation,
   addKeyHandler,
   createBtn,
   createSettingsBtn,
-  createTitleText, jumpFromLeft, jumpFromRight,
+  createTitleText,
+  jumpFromLeft,
+  jumpFromRight,
   jumpFromUp,
-  scaleUp
+  scaleUp,
 } from '@utils/ComponentUtils';
 
 const PLAY_TEXT = 'Press Space to play';
@@ -20,7 +22,7 @@ const BIRD_ANIMATION_OFFSET = 50;
 export default class MenuScene extends Phaser.Scene {
   constructor() {
     super({
-      key: 'MenuScene'
+      key: 'MenuScene',
     });
   }
 
@@ -32,7 +34,10 @@ export default class MenuScene extends Phaser.Scene {
   }
 
   create() {
-    this.settingsBtn = createSettingsBtn(this, this.onSettingsBtnClick.bind(this));
+    this.settingsBtn = createSettingsBtn(
+      this,
+      this.onSettingsBtnClick.bind(this)
+    );
     this.logoutBtn = this._createLogoutBtn();
     this._createLoginText();
     this._createHighscoreText();
@@ -68,11 +73,10 @@ export default class MenuScene extends Phaser.Scene {
     this.registry.set('loggedIn', !!(data && data.user));
     if (this.registry.get('loggedIn')) {
       this.registry.set('user', data.user);
-      this.registry.set('highscore', data.score || 0);
     } else {
       this.registry.set('user', GUEST_USER_NAME);
-      this.registry.set('highscore', getBestScore());
     }
+    this.registry.set('highscore', getBestScore());
   }
 
   _createLogoutBtn() {
@@ -85,7 +89,7 @@ export default class MenuScene extends Phaser.Scene {
       scene: this,
       onClick: this.onLogoutBtnClick.bind(this),
       originX: 1,
-      originY: 0.5
+      originY: 0.5,
     });
     jumpFromUp(this, logoutBtn);
     return logoutBtn;
@@ -94,38 +98,35 @@ export default class MenuScene extends Phaser.Scene {
   _createLoginText() {
     const x = this.width - APP_CONFIG.edgeMargin * 2 - this.logoutBtn.width;
     const y = APP_CONFIG.edgeMargin + this.settingsBtn.height / 2;
-    const loginText = this.add.text(
-      x,
-      y,
-      this.registry.get('user'),
-      APP_FONTS.simple
-    ).setOrigin(1, 0.5);
+    const loginText = this.add
+      .text(x, y, this.registry.get('user'), APP_FONTS.simple)
+      .setOrigin(1, 0.5);
     jumpFromUp(this, loginText);
     return loginText;
   }
 
   _createHighscoreText() {
-    const scoreText = this.add.text(
-      this.width - APP_CONFIG.edgeMargin,
-      APP_CONFIG.edgeMargin * 2 + this.logoutBtn.height,
-      `${HIGHSCORE_TEXT}${this.registry.get('highscore')}`,
-      APP_FONTS.base
-    ).setOrigin(1, 0);
+    const scoreText = this.add
+      .text(
+        this.width - APP_CONFIG.edgeMargin,
+        APP_CONFIG.edgeMargin * 2 + this.logoutBtn.height,
+        `${HIGHSCORE_TEXT}${this.registry.get('highscore')}`,
+        APP_FONTS.base
+      )
+      .setOrigin(1, 0);
     scaleUp(this, scoreText);
   }
 
   _createBirdImg() {
     const x = this.width / 2;
     const y = this.height / 2;
-    const birdImg = this.add.image(x, y, 'bird')
-      .setOrigin(0.5)
-      .setScale(3);
+    const birdImg = this.add.image(x, y, 'bird').setOrigin(0.5).setScale(3);
 
     this.tweens.add({
       targets: birdImg,
-      angle: birdImg.angle - (BIRD_ANIMATION_ANGLE / 2),
+      angle: birdImg.angle - BIRD_ANIMATION_ANGLE / 2,
       duration: APP_CONFIG.animationDuration,
-      ease: 'Sine.easeInOut'
+      ease: 'Sine.easeInOut',
     });
     this.tweens.add({
       targets: birdImg,
@@ -135,31 +136,26 @@ export default class MenuScene extends Phaser.Scene {
       ease: 'Sine.easeInOut',
       yoyo: 1,
       loop: -1,
-      delay: APP_CONFIG.animationDuration
+      delay: APP_CONFIG.animationDuration,
     });
     return birdImg;
   }
 
   _createPlayText() {
-    const playText = this.add.text(
-      this.width / 2,
-      this.height / 5 * 3,
-      PLAY_TEXT,
-      APP_FONTS.base
-    ).setOrigin(0.5, 0);
+    const playText = this.add
+      .text(this.width / 2, (this.height / 5) * 3, PLAY_TEXT, APP_FONTS.base)
+      .setOrigin(0.5, 0);
     scaleUp(this, playText);
     addJumpingAnimation(this, playText);
     return playText;
   }
 
   _createRSSImg() {
-    const rssImg = this.add.image(
-      APP_CONFIG.edgeMargin,
-      this.height - APP_CONFIG.edgeMargin,
-      'rss'
-    ).setOrigin(0, 1)
+    const rssImg = this.add
+      .image(APP_CONFIG.edgeMargin, this.height - APP_CONFIG.edgeMargin, 'rss')
+      .setOrigin(0, 1)
       .setScale(0.3)
-      .setInteractive({useHandCursor: true})
+      .setInteractive({ useHandCursor: true })
       .on('pointerup', () => {
         window.open(RSS_LINK, '_blank');
       });
@@ -175,7 +171,7 @@ export default class MenuScene extends Phaser.Scene {
       originY: 1,
       name: 'play',
       scene: this,
-      onClick: this.onPlayBtnClick.bind(this)
+      onClick: this.onPlayBtnClick.bind(this),
     });
     jumpFromRight(this, playBtn);
     return playBtn;
@@ -186,7 +182,7 @@ export default class MenuScene extends Phaser.Scene {
   }
 
   onSettingsBtnClick() {
-    changeScene('SettingsScene', this, {scene: 'MenuScene'});
+    changeScene('SettingsScene', this, { scene: 'MenuScene' });
   }
 
   onPlayBtnClick() {

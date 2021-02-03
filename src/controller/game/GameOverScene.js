@@ -1,13 +1,14 @@
-import {APP_CONFIG, APP_FONTS} from '@constants/general.const';
-import {setBestScore} from '@utils/StorageUtils';
-import {changeScene} from '@utils/CommonUtils';
+import { APP_CONFIG, APP_FONTS } from '@constants/general.const';
+import { setBestScore } from '@utils/StorageUtils';
+import { changeScene } from '@utils/CommonUtils';
 import {
   addKeyHandler,
   createBtn,
   jumpFromLeft,
   jumpFromRight,
-  jumpFromUp
+  jumpFromUp,
 } from '@utils/ComponentUtils';
+import StatisticsAPIService from '@services/StatisticsAPIService';
 
 const GAME_OVER_TEXT = 'GAME OVER';
 const SCORE_TEXT = 'Score';
@@ -17,16 +18,19 @@ const MARGIN = 100;
 export default class GameOverScene extends Phaser.Scene {
   constructor() {
     super({
-      key: 'GameOverScene'
+      key: 'GameOverScene',
     });
   }
 
-  init({score}) {
+  async init({ score }) {
     this.width = this.sys.canvas.width;
     this.height = this.sys.canvas.height;
 
     this.score = score;
     this.initialHighscore = this.registry.get('highscore');
+    if (this.registry.get('loggedIn')) {
+      await StatisticsAPIService.postUserStatistic(this.score);
+    }
     setBestScore(Math.max(this.score, this.initialHighscore));
   }
 
@@ -60,24 +64,22 @@ export default class GameOverScene extends Phaser.Scene {
   }
 
   _createGameOverText(offsetY) {
-    const gameOverText = this.add.text(
-      this.width / 2,
-      offsetY,
-      GAME_OVER_TEXT,
-      APP_FONTS.title
-    ).setOrigin(0.5, 0);
+    const gameOverText = this.add
+      .text(this.width / 2, offsetY, GAME_OVER_TEXT, APP_FONTS.title)
+      .setOrigin(0.5, 0);
     jumpFromUp(this, gameOverText);
     return gameOverText;
   }
 
   _createScoreText(offsetY) {
-    const scoreText = this.add.text(
-      this.width / 2,
-      offsetY,
-      `${SCORE_TEXT}: ${this.score}\n${
-        HIGHSCORE_TEXT}: ${this.initialHighscore}`,
-      APP_FONTS.base
-    ).setOrigin(0.5, 0);
+    const scoreText = this.add
+      .text(
+        this.width / 2,
+        offsetY,
+        `${SCORE_TEXT}: ${this.score}\n${HIGHSCORE_TEXT}: ${this.initialHighscore}`,
+        APP_FONTS.base
+      )
+      .setOrigin(0.5, 0);
     jumpFromUp(this, scoreText);
     return scoreText;
   }
@@ -90,7 +92,7 @@ export default class GameOverScene extends Phaser.Scene {
       originY: 0,
       name: 'home',
       scene: this,
-      onClick: this.onMainMenuBtnClick.bind(this)
+      onClick: this.onMainMenuBtnClick.bind(this),
     });
     jumpFromLeft(this, mainMenuBtn);
     return mainMenuBtn;
@@ -104,7 +106,7 @@ export default class GameOverScene extends Phaser.Scene {
       originY: 0,
       name: 'restart',
       scene: this,
-      onClick: this.onRestartBtnClick.bind(this)
+      onClick: this.onRestartBtnClick.bind(this),
     });
     jumpFromRight(this, mainMenuBtn);
     return mainMenuBtn;
