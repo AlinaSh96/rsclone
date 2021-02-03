@@ -29,7 +29,7 @@
       {
         "type": "audio",
         "key": "music",
-        "url": "./assets/audio/music.wav"
+        "url": "./assets/audio/music.mp3"
       },
       {
         "type": "spritesheet",
