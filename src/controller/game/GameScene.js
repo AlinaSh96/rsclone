@@ -1,79 +1,181 @@
 import Phaser from 'phaser';
-import {GAME_OPTIONS, GAME_IMGS} from '@constants/general.const';
-import {getBestScore, setBestScore} from '@utils/StorageUtils';
+import {APP_CONFIG, APP_FONTS} from '@constants/general.const';
+import {setBestScore} from '@utils/StorageUtils';
+import {addKeyHandler} from '@utils/ComponentUtils';
+import {Pipe} from '@model/Pipe';
+import {changeScene, getRandomNumber} from '@utils/CommonUtils';
+import {Bird} from '@model/Bird';
 
-// The GameScene class holds a game scene
+const PIPE_DELAY = 2000;
+const BIRD_START_POSITION = {
+  x: 50,
+  y: 100
+};
+
 export default class GameScene extends Phaser.Scene {
   constructor() {
-    super('PlayGame');
+    console.log('GameScene >>> constructor');
+    super('GameScene');
   }
 
-  preload() {
-    this.load.image('bird', GAME_IMGS.bird);
-    this.load.image('pipe', GAME_IMGS.pipe);
+  init(data) {//todo передавать topScore!
+    console.log('GameScene >>> init');
+    this.width = this.sys.canvas.width;
+    this.height = this.sys.canvas.height;
+
+    this.topScore = data && data.topScore || 0;
+    console.log('init', data, this.topScore);
   }
 
   create() {
-    this.pipetop = this.physics.add.sprite(400, 100, 'pipe');
-    // this.pipetop.scale = 5;
-    this.pipebot = this.physics.add.sprite(400, 200, 'pipe');
-    this.pipetop.setOrigin(0, 1);
-    this.pipebot.setOrigin(0, 0);
-    this.pipetop.setVelocityX(-GAME_OPTIONS.birdSpeed);
-    this.pipebot.setVelocityX(-GAME_OPTIONS.birdSpeed);
+    console.log('GameScene >>> create');
 
-    this.bird = this.physics.add.sprite(80, 240, 'bird');
-    this.bird.body.gravity.y = GAME_OPTIONS.birdGravity;
-    this.input.on('pointerdown', this.flap, this);
+    this.scoreText = this._addScoreText();
+    this.setScore(0);
 
-    this.physics.add.overlap(this.bird, this.pipetop, this.die, null, this);
-    this.physics.add.overlap(this.bird, this.pipebot, this.die, null, this);
-    this.bird.setCollideWorldBounds(true);// Turn on world bounds collisions
-    this.bird.body.onWorldBounds = true;// Turn the event listener
-    this.physics.world.on('worldbounds', this.die, this);// When touching world bounds
+    this.bird = this._addBird();
+    this.pipes = this.add.group({});
+    this._addNewRowOfPipes();
+    this._addTimer();
 
-    this.score = 0;
-    this.topScore = getBestScore();
-    this.scoreText = this.add.text(10, 10, '');
-    this.updateScore(this.score);
-  }
-
-  flap() {
-    this.bird.body.velocity.y = -GAME_OPTIONS.birdFlapPower;
-    this.tweens.add({
-      targets: this.bird,
-      angle: -20,
-      ease: 'Linear',
-      duration: 100,
-      repeat: 0,
-      yoyo: false,
-    });
+    addKeyHandler(this, this._handleKey.bind(this));
   }
 
   update() {
-    if (this.pipetop.getBounds().right < 0) {
-      this.pipetop.x = 320 + 30;
-      this.pipebot.x = 320 + 30;
-      let pipeHoleHeight = Phaser.Math.Between(GAME_OPTIONS.pipeHole[0],
-        GAME_OPTIONS.pipeHole[1]); // Random gap size
-      let pipeHolePosition = Phaser.Math.Between(GAME_OPTIONS.minPipeHeight
-      + pipeHoleHeight / 2,
-      480 - GAME_OPTIONS.minPipeHeight - pipeHoleHeight / 2);
-      this.pipetop.y = pipeHolePosition - pipeHoleHeight / 2;
-      this.pipebot.y = pipeHolePosition + pipeHoleHeight / 2;
-      this.updateScore(1);
-    }
+    //   console.log('GameScene >>> update');
+    //   if (this.pipeTop.getBounds().right < 0) {
+    //     this.pipeTop.x = 320 + 30;
+    //     this.pipeBottom.x = 320 + 30;
+    //     let pipeHoleHeight = Phaser.Math.Between(GAME_OPTIONS.pipeHole[0],
+    //       GAME_OPTIONS.pipeHole[1]); // Random gap size
+    //     let pipeHolePosition = Phaser.Math.Between(GAME_OPTIONS.minPipeHeight
+    //       + pipeHoleHeight / 2,
+    //       480 - GAME_OPTIONS.minPipeHeight - pipeHoleHeight / 2);
+    //     this.pipeTop.y = pipeHolePosition - pipeHoleHeight / 2;
+    //     this.pipeBottom.y = pipeHolePosition + pipeHoleHeight / 2;
+    //     this.updateScore();
+    //   }
+    //
 
-    if (this.bird.angle < 20) this.bird.angle += 1;
+    if (this.bird.isDead()) {
+      this.die();
+      return;
+    }
+    this.bird.update();
+    this.physics.overlap(
+      this.bird,
+      this.pipes,
+      this.die,
+      null,
+      this
+    );
   }
 
-  updateScore(inc) {
-    this.score += inc;
+  _addBird() {
+    return new Bird({
+      scene: this,
+      x: BIRD_START_POSITION.x,
+      y: BIRD_START_POSITION.y,
+      texture: 'bird'
+    });
+  }
+
+  _addPipe(x, y, frame) {
+    this.pipes.add(
+      new Pipe({
+        scene: this,
+        x: x,
+        y: y,
+        frame: frame,
+        texture: 'pipe'
+      })
+    );
+  }
+
+  _addNewRowOfPipes() {
+    console.log('_addNewRowOfPipes');
+
+    const pipeHeight = 60;
+    const pipesAmount = this.height / pipeHeight;
+    const holeSize = 3;
+
+    let hole = getRandomNumber(1, pipesAmount - holeSize - 1);
+
+    for (let i = 0; i < pipesAmount; i++) {
+      if (i >= hole && i < hole + holeSize) {
+        continue;
+      }
+      let frame;
+      if (i === hole - 1) {
+        frame = 0;
+      } else if (i === hole + holeSize) {
+        frame = 1;
+      } else {
+        frame = 2;
+      }
+      this._addPipe(
+        this.width - APP_CONFIG.edgeMargin,
+        i * pipeHeight,
+        frame
+      );
+    }
+  }
+
+  _addTimer() {
+    return this.time.addEvent({
+      delay: PIPE_DELAY,
+      callback: () => {
+        this._addNewRowOfPipes();
+        this.updateScore();
+      },
+      callbackScope: this,
+      loop: true
+    });
+  }
+
+  _handleKey(e) {
+    switch (e.code) {
+      case 'KeyP': {
+        this.onPauseBtnClick();
+        break;
+      }
+      default:
+        break;
+    }
+  }
+
+  _addScoreText() {
+    return this.add.text(
+      this.width - APP_CONFIG.edgeMargin,
+      APP_CONFIG.edgeMargin,
+      '',
+      APP_FONTS.small
+    )
+      .setOrigin(1, 0)
+      .setDepth(2);
+  }
+
+  onPauseBtnClick() {
+
+  }
+
+  setScore(score = 0) {
+    this.score = score;
     this.scoreText.text = `Score: ${this.score}\nBest: ${this.topScore}`;
   }
 
+  updateScore() {
+    this.setScore(this.score + 1);
+  }
+
   die() {
+    console.log('DIE');
+    Phaser.Actions.Call(
+      this.pipes.getChildren(),
+      pipe => pipe.body.setVelocityX(0),
+      this
+    );
     setBestScore(Math.max(this.score, this.topScore));
-    this.scene.start('PlayGame');
+    changeScene('GameScene', this);//todo create Game Over Scene
   }
 }

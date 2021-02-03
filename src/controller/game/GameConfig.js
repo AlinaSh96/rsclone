@@ -4,6 +4,8 @@ import BootScene from '@controller/game/BootScene';
 import {APP_CONFIG, COLORS} from '@constants/general.const';
 import AuthScene from '@controller/game/AuthScene';
 import SettingsScene from '@controller/game/SettingsScene';
+import AuthorsScene from '@controller/game/AuthorsScene';
+import ShortcutsScene from '@controller/game/ShortcutsScene';
 
 const calcAppWidth = () => {
   const width = window.innerWidth
@@ -21,15 +23,15 @@ const width = calcAppWidth();
 const height = calcAppHeight();
 
 export const gameConfig = {
-  width, // Width of the game in pixels
-  height, // Height of the game in pixels
+  // width, // Width of the game in pixels
+  // height, // Height of the game in pixels
   backgroundColor: COLORS.mainBckg, // The background color
-  // scale: {
-  //   mode: Phaser.Scale.FIT,
-  //   autoCenter: Phaser.Scale.CENTER_BOTH,
-  //   width: 640,
-  //   height: 960
-  // },
+  scale: {
+    mode: Phaser.Scale.FIT,
+    autoCenter: Phaser.Scale.CENTER_BOTH,
+    width: 720,
+    height: 1080
+  },
   input: {
     keyboard: true
   },
@@ -42,7 +44,7 @@ export const gameConfig = {
     }
   },
   parent: 'game', // Create the game inside the <div id='game'>
-  scene: [BootScene, AuthScene, MenuScene, SettingsScene/*, GameScene*/], // The class containing the methods to create our game (preload, create, update)
+  scene: [BootScene, AuthScene, MenuScene, SettingsScene, AuthorsScene, ShortcutsScene, GameScene],
   audio: {disableWebAudio: true}, // Use HTML5 audio instead of WebAudio
   render: {pixelArt: true, antialias: false}
 };

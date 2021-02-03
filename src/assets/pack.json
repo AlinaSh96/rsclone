@@ -3,18 +3,13 @@
     "files": [
       {
         "type": "image",
-        "key": "background",
-        "url": "./assets/images/bg.png"
-      },
-      {
-        "type": "image",
         "key": "bird",
         "url": "./assets/images/bird.png"
       },
       {
         "type": "image",
-        "key": "ph",
-        "url": "./assets/images/heavy-photo-for-debugging.png"
+        "key": "rss",
+        "url": "./assets/icons/rs_school_js.png"
       },
       {
         "type": "spritesheet",
@@ -23,6 +18,105 @@
         "frameConfig": {
           "frameWidth": 20,
           "frameHeight": 20
+        }
+      },
+      {
+        "type": "spritesheet",
+        "key": "settings",
+        "url": "./assets/icons/settings.png",
+        "frameConfig": {
+          "frameWidth": 70,
+          "frameHeight": 70
+        }
+      },
+      {
+        "type": "spritesheet",
+        "key": "back",
+        "url": "./assets/icons/back.png",
+        "frameConfig": {
+          "frameWidth": 64,
+          "frameHeight": 44
+        }
+      },
+      {
+        "type": "spritesheet",
+        "key": "logout",
+        "url": "./assets/icons/logout.png",
+        "frameConfig": {
+          "frameWidth": 50,
+          "frameHeight": 50
+        }
+      },
+      {
+        "type": "spritesheet",
+        "key": "login",
+        "url": "./assets/icons/login.png",
+        "frameConfig": {
+          "frameWidth": 54,
+          "frameHeight": 50
+        }
+      },
+      {
+        "type": "spritesheet",
+        "key": "play",
+        "url": "./assets/icons/play.png",
+        "frameConfig": {
+          "frameWidth": 142,
+          "frameHeight": 180
+        }
+      },
+      {
+        "type": "spritesheet",
+        "key": "soundOn",
+        "url": "./assets/icons/soundOn.png",
+        "frameConfig": {
+          "frameWidth": 64,
+          "frameHeight": 64
+        }
+      },
+      {
+        "type": "spritesheet",
+        "key": "soundOff",
+        "url": "./assets/icons/soundOff.png",
+        "frameConfig": {
+          "frameWidth": 66,
+          "frameHeight": 66
+        }
+      },
+      {
+        "type": "spritesheet",
+        "key": "musicOn",
+        "url": "./assets/icons/musicOn.png",
+        "frameConfig": {
+          "frameWidth": 44,
+          "frameHeight": 64
+        }
+      },
+      {
+        "type": "spritesheet",
+        "key": "musicOff",
+        "url": "./assets/icons/musicOff.png",
+        "frameConfig": {
+          "frameWidth": 65,
+          "frameHeight": 65
+        }
+      },
+      {
+        "type": "spritesheet",
+        "key": "authors",
+        "url": "./assets/icons/authors.png",
+        "frameConfig": {
+          "frameWidth": 72,
+          "frameHeight": 72
+        }
+      },
+      {
+        "type": "spritesheet",
+        "key": "shortcuts",
+        "url": "./assets/icons/shortcuts.png",
+        "frameConfig": {
+          "frameWidth": 72,
+          "frameHeight": 52
         }
       }
     ]

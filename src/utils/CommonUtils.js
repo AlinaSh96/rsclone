@@ -49,3 +49,5 @@ export const changeScene = (newSceneName, curScene, data) => {
     callbackScope: curScene,
   });
 };
+
+export const getRandomNumber = (a, b) => Math.floor(Math.random() * b) + a;
