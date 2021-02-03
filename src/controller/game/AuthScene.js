@@ -71,7 +71,7 @@ export default class AuthScene extends Phaser.Scene {
   }
 
   login(data) {
-    setBestScore(data.score);
+    setBestScore(data ? data.score : 0);
     changeScene('MenuScene', this, data);
     this.authController.stop();
   }
