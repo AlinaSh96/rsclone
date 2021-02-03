@@ -22,7 +22,6 @@ export default class MenuScene extends Phaser.Scene {
     super({
       key: 'MenuScene'
     });
-    this.loggedIn = false;
   }
 
   init(data) {
@@ -66,15 +65,13 @@ export default class MenuScene extends Phaser.Scene {
   }
 
   _initUserInfo(data) {
-    if (data && data.user) {
-      this.loggedIn = true;
-    }
-    if (this.loggedIn) {
-      this.user = data.user;
-      this.highscore = data.score || 0;
+    this.registry.set('loggedIn', !!(data && data.user));
+    if (this.registry.get('loggedIn')) {
+      this.registry.set('user', data.user);
+      this.registry.set('highscore', data.score || 0);
     } else {
-      this.user = GUEST_USER_NAME;
-      this.highscore = getBestScore();
+      this.registry.set('user', GUEST_USER_NAME);
+      this.registry.set('highscore', getBestScore());
     }
   }
 
@@ -84,7 +81,7 @@ export default class MenuScene extends Phaser.Scene {
     const logoutBtn = createBtn({
       x,
       y,
-      name: this.loggedIn ? 'logout' : 'login',
+      name: this.registry.get('loggedIn') ? 'logout' : 'login',
       scene: this,
       onClick: this.onLogoutBtnClick.bind(this),
       originX: 1,
@@ -100,7 +97,7 @@ export default class MenuScene extends Phaser.Scene {
     const loginText = this.add.text(
       x,
       y,
-      this.user,
+      this.registry.get('user'),
       APP_FONTS.simple
     ).setOrigin(1, 0.5);
     jumpFromUp(this, loginText);
@@ -111,7 +108,7 @@ export default class MenuScene extends Phaser.Scene {
     const scoreText = this.add.text(
       this.width - APP_CONFIG.edgeMargin,
       APP_CONFIG.edgeMargin * 2 + this.logoutBtn.height,
-      `${HIGHSCORE_TEXT}${this.highscore}`,
+      `${HIGHSCORE_TEXT}${this.registry.get('highscore')}`,
       APP_FONTS.base
     ).setOrigin(1, 0);
     scaleUp(this, scoreText);

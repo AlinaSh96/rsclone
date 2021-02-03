@@ -64,7 +64,7 @@ export const jumpFromLeft = (scene, element) => {
 
 export const jumpFromRight = (scene, element) => {
   const initialX = element.x;
-  element.x = element.width + element.x;
+  element.x = scene.sys.canvas.width;
   scene.tweens.add({
     targets: element,
     x: initialX,

@@ -118,6 +118,24 @@
           "frameWidth": 72,
           "frameHeight": 52
         }
+      },
+      {
+        "type": "spritesheet",
+        "key": "home",
+        "url": "./assets/icons/home.png",
+        "frameConfig": {
+          "frameWidth": 130,
+          "frameHeight": 111
+        }
+      },
+      {
+        "type": "spritesheet",
+        "key": "restart",
+        "url": "./assets/icons/restart.png",
+        "frameConfig": {
+          "frameWidth": 104,
+          "frameHeight": 120
+        }
       }
     ]
   }
