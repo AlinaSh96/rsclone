@@ -1,6 +1,7 @@
 import {APP_FONTS} from '@constants/general.const';
 import {changeScene} from '@utils/CommonUtils';
 import {scaleUp, createBackBtn, createBtn, createHeadingText, addKeyHandler} from '@utils/ComponentUtils';
+import {getMusicSetting, getSoundSetting, setMusicSetting, setSoundSetting} from '@utils/StorageUtils';
 
 const HEADING_TEXT = 'Settings';
 const DEFAULT_REDIRECT_SCENE = 'AuthScene';
@@ -18,6 +19,15 @@ export default class SettingsScene extends Phaser.Scene {
     this.width = this.sys.canvas.width;
     this.height = this.sys.canvas.height;
     this.redirectScene = data.scene || DEFAULT_REDIRECT_SCENE;
+
+    if (getSoundSetting() === null) {
+      setSoundSetting(1);
+    }
+    if (getMusicSetting() === null) {
+      setMusicSetting(1);
+    }
+    this.registry.set('sound', +getSoundSetting());
+    this.registry.set('music', +getMusicSetting());
   }
 
   create() {
@@ -59,15 +69,15 @@ export default class SettingsScene extends Phaser.Scene {
   _createMenuList() {
     const offsetLeft = this.width / 4;
     let offsetTop = this.height / 4;
-    const menuList = [
+    this.menuList = [
       {
-        name: 'soundOn',//todo should be dependant on app value
-        text: 'Sound: ON',//todo should be dependant on app value
+        name: `sound${this.registry.get('sound') ? 'On' : 'Off'}`,
+        text: `Sound: ${this.registry.get('sound') ? 'ON' : 'OFF'}`,
         onClick: this.onSoundBtnClick.bind(this)
       },
       {
-        name: 'musicOn',//todo should be dependant on app value
-        text: 'Music: ON',//todo should be dependant on app value
+        name: `music${this.registry.get('music') ? 'On' : 'Off'}`,
+        text: `Music: ${this.registry.get('music') ? 'ON' : 'OFF'}`,
         onClick: this.onMusicBtnClick.bind(this)
       },
       {
@@ -90,20 +100,12 @@ export default class SettingsScene extends Phaser.Scene {
         originY: 0.5,
         originX: 0.5
       });
-      const btnText = this.add.text(
-        offsetLeft + MARGIN_LEFT,
-        offsetTop,
+      const btnText = this._addSettingsText({
+        x: offsetLeft + MARGIN_LEFT,
+        y: offsetTop,
         text,
-        APP_FONTS.base
-      ).setOrigin(0, 0.5)
-        .setInteractive({useHandCursor: true})
-        .on('pointerup', onClick)
-        .on('pointerover', function () {
-          this.setStyle(APP_FONTS.baseHover);
-        })
-        .on('pointerout', function () {
-          this.setStyle(APP_FONTS.base);
-        });
+        onClick
+      });
       offsetTop += btn.height + MARGIN_BOTTOM;
       return {
         btn,
@@ -111,10 +113,23 @@ export default class SettingsScene extends Phaser.Scene {
       };
     });
 
-    menuList.forEach(({btn, btnText}) => {
+    this.menuList.forEach(({btn, btnText}) => {
       scaleUp(this, btn);
       scaleUp(this, btnText);
     });
+  }
+
+  _addSettingsText({x, y, text, onClick}) {
+    return this.add.text(x, y, text, APP_FONTS.base)
+      .setOrigin(0, 0.5)
+      .setInteractive({useHandCursor: true})
+      .on('pointerup', onClick)
+      .on('pointerover', function () {
+        this.setStyle(APP_FONTS.baseHover);
+      })
+      .on('pointerout', function () {
+        this.setStyle(APP_FONTS.base);
+      });
   }
 
   onBackBtnClick() {
@@ -122,11 +137,18 @@ export default class SettingsScene extends Phaser.Scene {
   }
 
   onSoundBtnClick() {
+    this.registry.set('sound', this.registry.get('sound') ? 0 : 1);
+    setSoundSetting(this.registry.get('sound'));
+    this.menuList[0].btnText.text = `Sound: ${this.registry.get('sound') ? 'ON' : 'OFF'}`;
+    this.menuList[0].btn.setTexture(`sound${this.registry.get('sound') ? 'On' : 'Off'}`);
 
   }
 
   onMusicBtnClick() {
-
+    this.registry.set('music', this.registry.get('music') ? 0 : 1);
+    setMusicSetting(this.registry.get('music'));
+    this.menuList[1].btnText.text = `Music: ${this.registry.get('music') ? 'ON' : 'OFF'}`;
+    this.menuList[1].btn.setTexture(`music${this.registry.get('music') ? 'On' : 'Off'}`);
   }
 
   onAuthorsBtnClick() {

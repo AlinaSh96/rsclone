@@ -18,6 +18,7 @@ const HIGHSCORE_TEXT = 'Highscore: ';
 const GUEST_USER_NAME = 'Guest';
 const BIRD_ANIMATION_ANGLE = 14;
 const BIRD_ANIMATION_OFFSET = 50;
+const MARGIN = 30;
 
 export default class MenuScene extends Phaser.Scene {
   constructor() {
@@ -38,6 +39,14 @@ export default class MenuScene extends Phaser.Scene {
       this,
       this.onSettingsBtnClick.bind(this)
     );
+    const statisticsBtn = createBtn({
+      x: MARGIN + this.settingsBtn.width,
+      y: APP_CONFIG.edgeMargin,
+      name: 'statistics',
+      scene: this,
+      onClick: this.onStatisticsBtnClick.bind(this)
+    });
+    jumpFromUp(this, statisticsBtn);
     this.logoutBtn = this._createLogoutBtn();
     this._createLoginText();
     this._createHighscoreText();
@@ -56,6 +65,10 @@ export default class MenuScene extends Phaser.Scene {
         this.onSettingsBtnClick();
         break;
       }
+      case 'KeyT': {
+        this.onStatisticsBtnClick();
+        break;
+      }
       case 'KeyX': {
         this.onLogoutBtnClick();
         break;
@@ -70,6 +83,9 @@ export default class MenuScene extends Phaser.Scene {
   }
 
   _initUserInfo(data) {
+    if (this.registry.get('loggedIn') && this.registry.get('user')) {
+      return;
+    }
     this.registry.set('loggedIn', !!(data && data.user));
     if (this.registry.get('loggedIn')) {
       this.registry.set('user', data.user);
@@ -178,11 +194,16 @@ export default class MenuScene extends Phaser.Scene {
   }
 
   onLogoutBtnClick() {
+    this.registry.set('loggedIn', false);
     changeScene('AuthScene', this);
   }
 
   onSettingsBtnClick() {
     changeScene('SettingsScene', this, { scene: 'MenuScene' });
+  }
+
+  onStatisticsBtnClick() {
+    changeScene('StatisticsScene', this);
   }
 
   onPlayBtnClick() {

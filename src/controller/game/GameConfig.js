@@ -7,6 +7,7 @@ import SettingsScene from '@controller/game/SettingsScene';
 import AuthorsScene from '@controller/game/AuthorsScene';
 import ShortcutsScene from '@controller/game/ShortcutsScene';
 import GameOverScene from '@controller/game/GameOverScene';
+import StatisticsScene from '@controller/game/StatisticsScene';
 
 const calcAppWidth = () => {
   const width = window.innerWidth
@@ -54,6 +55,7 @@ export const gameConfig = {
     ShortcutsScene,
     GameScene,
     GameOverScene,
+    StatisticsScene
   ],
   audio: {disableWebAudio: true}, // Use HTML5 audio instead of WebAudio
   render: {pixelArt: true, antialias: false}

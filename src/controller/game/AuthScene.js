@@ -70,8 +70,8 @@ export default class AuthScene extends Phaser.Scene {
     return this.width * AUTH_FORM_WIDTH_PERCENT;
   }
 
-  login(data) {
-    setBestScore(data.score);
+  login(data = {}) {
+    setBestScore(data.score || 0);
     changeScene('MenuScene', this, data);
     this.authController.stop();
   }

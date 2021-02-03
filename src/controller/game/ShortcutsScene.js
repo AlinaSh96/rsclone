@@ -9,6 +9,7 @@ const SHORTCUTS_TEXT = [
     title: 'Main menu',
     shortcuts: [
       'S - Show/Hide settings',
+      'T - Show/Hide statistics',
       'Space - Start game/Enter as guest',
       'X - Logout'
     ]
@@ -26,16 +27,16 @@ const SHORTCUTS_TEXT = [
     title: 'In game',
     shortcuts: [
       'Space - Fly up',
-      'P - Pause'
+      // 'P - Pause'
     ]
   },
-  {
-    title: 'Pause screen',
-    shortcuts: [
-      'B - Back to main menu',
-      'P - Back to game'
-    ]
-  },
+  // {
+  //   title: 'Pause screen',
+  //   shortcuts: [
+  //     'B - Back to main menu',
+  //     'P - Back to game'
+  //   ]
+  // },
   {
     title: 'Game over screen',
     shortcuts: [

@@ -13,4 +13,23 @@ const getAuthToken = () =>
 const setAuthToken = (token) =>
   save(AUTHORIZATION_HEADER.localStorageName, token);
 
-export { getBestScore, setBestScore, getAuthToken, setAuthToken };
+const getMusicSetting = () =>
+  localStorage.getItem(GAME_OPTIONS.localStorageMusic);
+
+const setMusicSetting = (music) => save(GAME_OPTIONS.localStorageMusic, music);
+
+const getSoundSetting = () =>
+  localStorage.getItem(GAME_OPTIONS.localStorageSound);
+
+const setSoundSetting = (sound) => save(GAME_OPTIONS.localStorageSound, sound);
+
+export {
+  getBestScore,
+  setBestScore,
+  getAuthToken,
+  setAuthToken,
+  getMusicSetting,
+  setMusicSetting,
+  getSoundSetting,
+  setSoundSetting
+};
