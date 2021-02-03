@@ -39,7 +39,7 @@ body {
             rgba(128, 0, 128, 0.2));
 }
 
-.auth-form {
+.auth-block {
     --form-width: auto;
 
     position: absolute;
@@ -54,62 +54,88 @@ body {
         margin-bottom: 2rem;
     }
 
-    .input {
-        width: 100%;
-        padding: 1rem;
-        outline: none;
-        border: 1px solid $color-primary;
-        background-color: $color-sec;
-        color: $color-base;
+    .login-form{
+        .input {
+            width: 100%;
+            padding: 1rem;
+            outline: none;
+            border: 1px solid $color-primary;
+            background-color: $color-sec;
+            color: $color-base;
 
-        &:focus {
-            color: $color-base-sec;
-            background-color: $color-primary;
-            border-color: $color-sec;
+            &:focus {
+                color: $color-base-sec;
+                background-color: $color-primary;
+                border-color: $color-sec;
+            }
         }
-    }
-
-    &__buttons {
-        display: flex;
-        align-items: center;
-        width: 100%;
 
         & > *:not(:last-child) {
-            margin-right: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        &__error {
+            color: $color-primary-darker;
+        }
+
+        &__pwd-span {
+            font-size: 1.5rem;
+            color: $color-primary-darker;
+        }
+
+        &__pwd-checkbox{
+            cursor: pointer;
+            margin-right: 1rem;
+
+            &:hover,
+            &:active {
+                border-color: $color-sec;
+            }
+        }
+
+        &__buttons {
+            display: flex;
+            align-items: center;
+            width: 100%;
+
+            & > *:not(:last-child) {
+                margin-right: 2rem;
+            }
+        }
+
+        .button {
+            padding: 1rem;
+            min-width: 9rem;
+            outline: none;
+            cursor: pointer;
+
+            &:hover,
+            &:active {
+                border-color: $color-sec;
+            }
+        }
+
+        &__login-btn,
+        &__sign-up-btn {
+            flex-grow: 1;
+        }
+
+        &__login-btn {
+            background-color: $color-foc;
+            color: $color-base;
+            border: 1px solid $color-primary;
+        }
+
+        &__sign-up-btn {
+            background-color: $color-primary;
+            color: $color-base;
+            border: 1px solid $color-foc;
         }
     }
-
-    .button {
-        padding: 1rem;
-        min-width: 9rem;
-        outline: none;
-        cursor: pointer;
-
-        &:hover,
-        &:active {
-            border-color: $color-sec;
-        }
-    }
-
-    .auth-form__login-btn,
-    .auth-form__sign-up-btn {
-        flex-grow: 1;
-    }
-
-    .auth-form__login-btn {
-        background-color: $color-foc;
-        color: $color-base;
-        border: 1px solid $color-primary;
-    }
-
-    .auth-form__sign-up-btn {
-        background-color: $color-primary;
-        color: $color-base;
-        border: 1px solid $color-foc;
-    }
-
+    
     .button-link {
         flex-grow: 0;
+        align-self: flex-end;
         padding: 1rem;
         color: $color-primary-darker;
         background-color: transparent;

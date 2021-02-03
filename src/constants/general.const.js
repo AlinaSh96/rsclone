@@ -7,7 +7,7 @@ export const APP_CONFIG = {
   sceneChangeDuration: 150,
   maxWidth: 720,
   maxHeight: 1280,
-  edgeMargin: 10
+  edgeMargin: 10,
 };
 
 export const COLORS = {
@@ -16,13 +16,13 @@ export const COLORS = {
   fadeBckg: {
     red: 173,
     green: 216,
-    blue: 230
+    blue: 230,
   },
-  loadingBckg: 0xADD8E6,
+  loadingBckg: 0xadd8e6,
   loadingBckg_: '#ADD8E6',
-  loadingBar: 0x6FBBD3,
+  loadingBar: 0x6fbbd3,
   loadingBar_: '#6FBBD3',
-  progressBar: 0xFFB6C1,
+  progressBar: 0xffb6c1,
   progressBar_: '#FFB6C1',
   textMain: '#2DADD5',
   textMainDarker: '#007AA3',
@@ -31,7 +31,7 @@ export const COLORS = {
   // textMainBorder: '#90EE90',
   textSimple: '#000000',
   textSimpleBorder: '#FFFFFF',
-}
+};
 
 export const GAME_OPTIONS = {
   birdGravity: 800,
@@ -39,12 +39,12 @@ export const GAME_OPTIONS = {
   minPipeHeight: 50,
   pipeHole: [100, 130],
   birdFlapPower: 300, // flap thrust
-  localStorageName: 'bestFlappyScore'
+  localStorageName: 'bestFlappyScore',
 };
 
 export const GAME_IMGS = {
   bird: `${imagesFolderPath}bird.png`,
-  pipe: `${imagesFolderPath}pipe.png`
+  pipe: `${imagesFolderPath}pipe.png`,
 };
 
 const fontFamily = 'Source Sans Pro';
@@ -56,7 +56,7 @@ export const APP_FONTS = {
     fill: COLORS.textMain,
     stroke: COLORS.textMainBorder,
     strokeThickness: 6,
-    align: 'center'
+    align: 'center',
   },
   base: {
     fontFamily,
@@ -64,16 +64,20 @@ export const APP_FONTS = {
     fill: COLORS.textMain,
     stroke: COLORS.textMainBorder,
     strokeThickness: 5,
-    align: 'center'
+    align: 'center',
   },
   baseHover: {
     fill: COLORS.textMainDarker,
-    stroke: COLORS.textFocus
+    stroke: COLORS.textFocus,
   },
   simple: {
     fontFamily,
     fontSize: 16,
     fill: COLORS.textMainDarker,
-    align: 'center'
-  }
-}
+    align: 'center',
+  },
+};
+
+export const BASE_BE_URL = 'https://rsclone-flappy-bird-be.herokuapp.com';
+
+export const AUTHORIZATION_HEADER = 'authorization';

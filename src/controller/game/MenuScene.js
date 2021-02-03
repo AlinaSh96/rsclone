@@ -1,6 +1,6 @@
-import {APP_CONFIG, APP_FONTS, COLORS} from '@constants/general.const';
-import {getBestScore} from '@utils/StorageUtils';
-import {changeScene, createElement} from '@utils/CommonUtils';
+import { APP_CONFIG, APP_FONTS, COLORS } from '@constants/general.const';
+import { getBestScore } from '@utils/StorageUtils';
+import { changeScene, createElement } from '@utils/CommonUtils';
 
 const PLAY_TEXT = 'Press Space to play';
 const HIGHSCORE_TEXT = 'Highscore: ';
@@ -12,7 +12,7 @@ export default class MenuScene extends Phaser.Scene {
   constructor() {
     console.log('MenuScene >>> constructor');
     super({
-      key: 'MenuScene'
+      key: 'MenuScene',
     });
     this.loggedIn = false;
   }
@@ -35,48 +35,48 @@ export default class MenuScene extends Phaser.Scene {
 
   create() {
     console.log('MenuScene >>> create');
-    this.add.text(
-      this.width / 2,
-      this.height / 4,
-      APP_CONFIG.title,
-      APP_FONTS.title
-    ).setOrigin(0.5, 0);
+    this.add
+      .text(this.width / 2, this.height / 4, APP_CONFIG.title, APP_FONTS.title)
+      .setOrigin(0.5, 0);
 
-    this.add.text(
-      this.width / 2,
-      this.height / 4 * 3,
-      PLAY_TEXT,
-      APP_FONTS.base
-    ).setOrigin(0.5, 0);
+    this.add
+      .text(this.width / 2, (this.height / 4) * 3, PLAY_TEXT, APP_FONTS.base)
+      .setOrigin(0.5, 0);
 
     const highScore = getBestScore();
-    this.add.text(
-      this.width - APP_CONFIG.edgeMargin,
-      APP_CONFIG.edgeMargin,
-      `${HIGHSCORE_TEXT}${highScore}`,
-      APP_FONTS.base
-    ).setOrigin(1, 0);
+    this.add
+      .text(
+        this.width - APP_CONFIG.edgeMargin,
+        APP_CONFIG.edgeMargin,
+        `${HIGHSCORE_TEXT}${highScore}`,
+        APP_FONTS.base
+      )
+      .setOrigin(1, 0);
 
-    this.settingsText = this.add.text(
-      APP_CONFIG.edgeMargin,
-      APP_CONFIG.edgeMargin,
-      SETTINGS_TEXT,
-      APP_FONTS.base
-    ).setOrigin(0, 0);
+    this.settingsText = this.add
+      .text(
+        APP_CONFIG.edgeMargin,
+        APP_CONFIG.edgeMargin,
+        SETTINGS_TEXT,
+        APP_FONTS.base
+      )
+      .setOrigin(0, 0);
 
-    this.add.text(
-      APP_CONFIG.edgeMargin,
-      this.height - APP_CONFIG.edgeMargin,
-      AUTHORS_TEXT,
-      APP_FONTS.simple
-    ).setOrigin(0, 1);
+    this.add
+      .text(
+        APP_CONFIG.edgeMargin,
+        this.height - APP_CONFIG.edgeMargin,
+        AUTHORS_TEXT,
+        APP_FONTS.simple
+      )
+      .setOrigin(0, 1);
 
     this._addEventListeners();
   }
 
   _addEventListeners() {
     this.settingsText
-      .setInteractive({useHandCursor: true})
+      .setInteractive({ useHandCursor: true })
       .on('pointerover', function () {
         this.setStyle(APP_FONTS.baseHover);
       })
@@ -84,7 +84,7 @@ export default class MenuScene extends Phaser.Scene {
         this.setStyle(APP_FONTS.base);
       })
       .on('pointerdown', () => {
-        changeScene('SettingsScene', this, {scene: 'MenuScene'});
+        changeScene('SettingsScene', this, { scene: 'MenuScene' });
       });
   }
 
