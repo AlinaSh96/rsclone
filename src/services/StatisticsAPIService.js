@@ -21,4 +21,21 @@ export default {
       return error.response;
     }
   },
+  async postUserStatistic(userScore) {
+    const headers = { Authorization: getAuthToken() };
+    let response = null;
+
+    try {
+      response = await axios({
+        method: 'post',
+        baseURL: baseAuthUrl,
+        url: '',
+        data: { score: userScore },
+        headers,
+      });
+      return response;
+    } catch (error) {
+      return error.response;
+    }
+  },
 };
