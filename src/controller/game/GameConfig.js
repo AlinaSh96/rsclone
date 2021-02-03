@@ -6,6 +6,7 @@ import AuthScene from '@controller/game/AuthScene';
 import SettingsScene from '@controller/game/SettingsScene';
 import AuthorsScene from '@controller/game/AuthorsScene';
 import ShortcutsScene from '@controller/game/ShortcutsScene';
+import GameOverScene from '@controller/game/GameOverScene';
 
 const calcAppWidth = () => {
   const width = window.innerWidth
@@ -44,7 +45,16 @@ export const gameConfig = {
     }
   },
   parent: 'game', // Create the game inside the <div id='game'>
-  scene: [BootScene, AuthScene, MenuScene, SettingsScene, AuthorsScene, ShortcutsScene, GameScene],
+  scene: [
+    BootScene,
+    AuthScene,
+    MenuScene,
+    SettingsScene,
+    AuthorsScene,
+    ShortcutsScene,
+    GameScene,
+    GameOverScene,
+  ],
   audio: {disableWebAudio: true}, // Use HTML5 audio instead of WebAudio
   render: {pixelArt: true, antialias: false}
 };

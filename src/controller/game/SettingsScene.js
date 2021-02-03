@@ -1,4 +1,4 @@
-import {APP_CONFIG, APP_FONTS} from '@constants/general.const';
+import {APP_FONTS} from '@constants/general.const';
 import {changeScene} from '@utils/CommonUtils';
 import {scaleUp, createBackBtn, createBtn, createHeadingText, addKeyHandler} from '@utils/ComponentUtils';
 
@@ -9,21 +9,18 @@ const MARGIN_BOTTOM = 50;
 
 export default class SettingsScene extends Phaser.Scene {
   constructor() {
-    console.log('SettingsScene >>> constructor');
     super({
       key: 'SettingsScene'
     });
   }
 
   init(data) {
-    console.log('SettingsScene >>> init');
     this.width = this.sys.canvas.width;
     this.height = this.sys.canvas.height;
     this.redirectScene = data.scene || DEFAULT_REDIRECT_SCENE;
   }
 
   create() {
-    console.log('SettingsScene >>> create');
     createBackBtn(this, this.onBackBtnClick.bind(this));
     createHeadingText(this, HEADING_TEXT);
     this._createMenuList();

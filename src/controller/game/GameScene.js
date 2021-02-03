@@ -14,22 +14,15 @@ const BIRD_START_POSITION = {
 
 export default class GameScene extends Phaser.Scene {
   constructor() {
-    console.log('GameScene >>> constructor');
     super('GameScene');
   }
 
-  init(data) {//todo передавать topScore!
-    console.log('GameScene >>> init');
+  init() {
     this.width = this.sys.canvas.width;
     this.height = this.sys.canvas.height;
-
-    this.topScore = data && data.topScore || 0;
-    console.log('init', data, this.topScore);
   }
 
   create() {
-    console.log('GameScene >>> create');
-
     this.scoreText = this._addScoreText();
     this.setScore(0);
 
@@ -42,7 +35,6 @@ export default class GameScene extends Phaser.Scene {
   }
 
   update() {
-    //   console.log('GameScene >>> update');
     //   if (this.pipeTop.getBounds().right < 0) {
     //     this.pipeTop.x = 320 + 30;
     //     this.pipeBottom.x = 320 + 30;
@@ -93,8 +85,6 @@ export default class GameScene extends Phaser.Scene {
   }
 
   _addNewRowOfPipes() {
-    console.log('_addNewRowOfPipes');
-
     const pipeHeight = 60;
     const pipesAmount = this.height / pipeHeight;
     const holeSize = 3;
@@ -161,7 +151,7 @@ export default class GameScene extends Phaser.Scene {
 
   setScore(score = 0) {
     this.score = score;
-    this.scoreText.text = `Score: ${this.score}\nBest: ${this.topScore}`;
+    this.scoreText.text = `Score: ${this.score}\nBest: ${this.registry.get('highscore')}`;
   }
 
   updateScore() {
@@ -175,7 +165,6 @@ export default class GameScene extends Phaser.Scene {
       pipe => pipe.body.setVelocityX(0),
       this
     );
-    setBestScore(Math.max(this.score, this.topScore));
-    changeScene('GameScene', this);//todo create Game Over Scene
+    changeScene('GameOverScene', this, {score: this.score});
   }
 }

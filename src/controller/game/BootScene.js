@@ -13,20 +13,17 @@ const PROGRESS_BAR = {
 
 export default class BootScene extends Phaser.Scene {
   constructor() {
-    console.log('BootScene >>> constructor');
     super({
       key: 'BootScene'
     });
   }
 
   init() {
-    console.log('BootScene >>> init');
     this.width = this.cameras.main.width;
     this.height = this.cameras.main.height;
   }
 
   preload() {
-    console.log('BootScene >>> preload');
     this.cameras.main.setBackgroundColor(COLORS.loadingBckg);
     this._createLoadingBar();
 
@@ -37,7 +34,6 @@ export default class BootScene extends Phaser.Scene {
   }
 
   update() {
-    console.log('BootScene >>> update');
     changeScene('AuthScene', this);
   }
 
