@@ -1,7 +1,7 @@
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const webpack = require('webpack');
 const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin');
@@ -13,73 +13,72 @@ const isProd = !isDev;
 const optimization = () => {
   const config = {
     splitChunks: {
-      chunks: 'all'
-    }
+      chunks: 'all',
+    },
   };
   if (isProd) {
     config.minimizer = [
       new OptimizeCssAssetsWebpackPlugin(),
-      new TerserWebpackPlugin()
+      new TerserWebpackPlugin(),
     ];
   }
   return config;
-}
+};
 
-const filename = ext => isDev ? `[name].${ext}` : `[name].[contenthash].${ext}`;
+const filename = (ext) =>
+  isDev ? `[name].${ext}` : `[name].[contenthash].${ext}`;
 
-const cssLoaders = extra => {
+const cssLoaders = (extra) => {
   const loaders = [
     {
       loader: MiniCssExtractPlugin.loader,
       options: {
-        publicPath: './'
-      }
+        publicPath: './',
+      },
     },
-    'css-loader'
+    'css-loader',
   ];
   if (extra) {
     loaders.push(extra);
   }
   return loaders;
-}
+};
 
-const babelOptions = preset => {
+const babelOptions = (preset) => {
   const opts = {
-    presets: [
-      '@babel/preset-env'
-    ]
+    presets: ['@babel/preset-env'],
   };
   if (preset) {
     opts.presets.push(preset);
   }
   return opts;
-}
+};
 
 const jsLoaders = () => {
   return [
     {
       loader: 'babel-loader',
-      options: babelOptions()
-    }
+      options: babelOptions(),
+    },
   ];
-}
+};
 
 const tsLoaders = () => {
   return [
     {
       loader: 'babel-loader',
-      options: babelOptions('@babel/preset-typescript')
-    }
+      options: babelOptions('@babel/preset-typescript'),
+    },
   ];
-}
+};
 
 const plugins = () => {
   return [
     new HtmlWebpackPlugin({
       template: './index.html',
       minify: {
-        collapseWhitespace: isProd
-      }
+        collapseWhitespace: isProd,
+      },
     }),
     new CleanWebpackPlugin(),
     new webpack.HotModuleReplacementPlugin(),
@@ -87,23 +86,23 @@ const plugins = () => {
       patterns: [
         {
           from: path.resolve(__dirname, 'src/favicon.ico'),
-          to: path.resolve(__dirname, 'dist')
+          to: path.resolve(__dirname, 'dist'),
         },
         {
           from: path.resolve(__dirname, 'src/assets/icons'),
-          to: path.resolve(__dirname, 'dist/assets/icons')
+          to: path.resolve(__dirname, 'dist/assets/icons'),
         },
         {
           from: path.resolve(__dirname, 'src/assets/images'),
-          to: path.resolve(__dirname, 'dist/assets/images')
-        }
-      ]
+          to: path.resolve(__dirname, 'dist/assets/images'),
+        },
+      ],
     }),
     new MiniCssExtractPlugin({
-      filename: filename('css')
-    })
+      filename: filename('css'),
+    }),
   ];
-}
+};
 
 module.exports = {
   context: path.resolve(__dirname, 'src'),
@@ -111,7 +110,7 @@ module.exports = {
   entry: ['@babel/polyfill', './index.js'],
   output: {
     filename: filename('js'),
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, 'dist'),
   },
   resolve: {
     extensions: ['.js', '.json', '.ts'],
@@ -122,8 +121,9 @@ module.exports = {
       '@model': path.resolve(__dirname, './src/model'),
       '@styles': path.resolve(__dirname, './src/styles'),
       '@view': path.resolve(__dirname, './src/view'),
-      '@utils': path.resolve(__dirname, './src/utils')
-    }
+      '@utils': path.resolve(__dirname, './src/utils'),
+      '@services': path.resolve(__dirname, './src/services'),
+    },
   },
   module: {
     rules: [
@@ -134,38 +134,38 @@ module.exports = {
       // },
       {
         test: /\.css$/,
-        use: cssLoaders()
+        use: cssLoaders(),
       },
       {
         test: /\.s[ac]ss$/,
-        use: cssLoaders('sass-loader')
+        use: cssLoaders('sass-loader'),
       },
       {
         test: /\.(ttf|woff2)$/,
-        loader: 'file-loader'
+        loader: 'file-loader',
       },
       {
         test: /\.(mp3|svg|jpg|png)$/,
-        loader: 'file-loader'
+        loader: 'file-loader',
       },
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: jsLoaders()
+        use: jsLoaders(),
       },
       {
         test: /\.ts$/,
         exclude: /node_modules/,
-        use: tsLoaders()
-      }
-    ]
+        use: tsLoaders(),
+      },
+    ],
   },
   optimization: optimization(),
   devServer: {
     open: isDev,
     hot: isDev,
-    port: 8080
+    port: 8080,
   },
   devtool: isDev ? 'source-map' : undefined,
-  plugins: plugins()
+  plugins: plugins(),
 };

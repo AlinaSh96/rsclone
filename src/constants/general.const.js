@@ -6,6 +6,7 @@ export const APP_CONFIG = {
   assetsPackPath: `${assetsFolderPath}pack.json`,
   sceneChangeDuration: 150,
   maxWidth: 720,
+
   maxHeight: 1080,
   edgeMargin: 10,
   animationDuration: 300
@@ -17,13 +18,13 @@ export const COLORS = {
   fadeBckg: {
     red: 173,
     green: 216,
-    blue: 230
+    blue: 230,
   },
-  loadingBckg: 0xADD8E6,
+  loadingBckg: 0xadd8e6,
   loadingBckg_: '#ADD8E6',
-  loadingBar: 0x6FBBD3,
+  loadingBar: 0x6fbbd3,
   loadingBar_: '#6FBBD3',
-  progressBar: 0xFFB6C1,
+  progressBar: 0xffb6c1,
   progressBar_: '#FFB6C1',
   textMain: '#007AA3',
   // textMainDarker: '#007AA3',
@@ -48,7 +49,7 @@ export const GAME_OPTIONS = {
 
 export const GAME_IMGS = {
   bird: `${imagesFolderPath}bird.png`,
-  pipe: `${imagesFolderPath}pipe.png`
+  pipe: `${imagesFolderPath}pipe.png`,
 };
 
 const fontFamily = '\"Potta One\"';
@@ -89,7 +90,7 @@ export const APP_FONTS = {
     fill: COLORS.textMain,
     stroke: COLORS.textMainBorder,
     strokeThickness: 5,
-    align: 'center'
+    align: 'center',
   },
   baseHover: {
     stroke: COLORS.textFocus
@@ -115,4 +116,8 @@ export const APP_FONTS = {
     stroke: COLORS.textMainBorder,
     strokeThickness: 5,
   }
-}
+};
+
+export const BASE_BE_URL = 'https://rsclone-flappy-bird-be.herokuapp.com';
+
+export const AUTHORIZATION_HEADER = 'authorization';

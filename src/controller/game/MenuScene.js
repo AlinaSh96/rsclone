@@ -11,7 +11,7 @@ export default class MenuScene extends Phaser.Scene {
   constructor() {
     console.log('MenuScene >>> constructor');
     super({
-      key: 'MenuScene'
+      key: 'MenuScene',
     });
     this.loggedIn = false;
   }
