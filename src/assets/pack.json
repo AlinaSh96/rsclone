@@ -12,6 +12,26 @@
         "url": "./assets/icons/rs_school_js.png"
       },
       {
+        "type": "audio",
+        "key": "main",
+        "url": "./assets/audio/main.wav"
+      },
+      {
+        "type": "audio",
+        "key": "finish",
+        "url": "./assets/audio/finish.wav"
+      },
+      {
+        "type": "audio",
+        "key": "die",
+        "url": "./assets/audio/die.wav"
+      },
+      {
+        "type": "audio",
+        "key": "music",
+        "url": "./assets/audio/music.wav"
+      },
+      {
         "type": "spritesheet",
         "key": "pipe",
         "url": "./assets/images/sprites/pipe.png",
@@ -135,6 +155,15 @@
         "frameConfig": {
           "frameWidth": 104,
           "frameHeight": 120
+        }
+      },
+      {
+        "type": "spritesheet",
+        "key": "statistics",
+        "url": "./assets/icons/statistics.png",
+        "frameConfig": {
+          "frameWidth": 52,
+          "frameHeight": 52
         }
       }
     ]

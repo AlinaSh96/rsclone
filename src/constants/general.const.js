@@ -44,7 +44,9 @@ export const GAME_OPTIONS = {
   minPipeHeight: 50,
   pipeHole: [100, 130],
   birdFlapPower: 400, // flap thrust
-  localStorageName: 'bestFlappyScore'
+  localStorageName: 'bestFlappyScore',
+  localStorageSound: 'flappySound',
+  localStorageMusic: 'flappyMusic',
 };
 
 export const GAME_IMGS = {
