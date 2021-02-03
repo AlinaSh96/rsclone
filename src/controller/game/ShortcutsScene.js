@@ -32,14 +32,14 @@ const SHORTCUTS_TEXT = [
   {
     title: 'Pause screen',
     shortcuts: [
-      'Backspace - Back to main menu',
+      'B - Back to main menu',
       'P - Back to game'
     ]
   },
   {
     title: 'Game over screen',
     shortcuts: [
-      'Backspace - Back to main menu',
+      'B - Back to main menu',
       'R - Restart game'
     ]
   }

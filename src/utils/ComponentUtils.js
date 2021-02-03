@@ -40,19 +40,56 @@ export const createBackBtn = (scene, onClick) => {
   return backBtn;
 };
 
-export const createTitleText = (scene) => scene.add.text(
-  scene.getWidth() / 2,
-  scene.getHeight() / 4,
-  APP_CONFIG.title,
-  APP_FONTS.title
-).setOrigin(0.5, 0)
-  .setInteractive()
-  .on('pointerover', function () {
-    this.setStyle(APP_FONTS.titleHover);
-  })
-  .on('pointerout', function () {
-    this.setStyle(APP_FONTS.title);
+export const jumpFromUp = (scene, element) => {
+  const initialY = element.y;
+  element.y = -element.height - element.y;
+  scene.tweens.add({
+    targets: element,
+    y: initialY,
+    duration: APP_CONFIG.animationDuration,
+    ease: 'Back'
   });
+}
+
+export const jumpFromLeft = (scene, element) => {
+  const initialX = element.x;
+  element.x = -element.width - element.x;
+  scene.tweens.add({
+    targets: element,
+    x: initialX,
+    duration: APP_CONFIG.animationDuration,
+    ease: 'Back'
+  });
+}
+
+export const jumpFromRight = (scene, element) => {
+  const initialX = element.x;
+  element.x = scene.sys.canvas.width;
+  scene.tweens.add({
+    targets: element,
+    x: initialX,
+    duration: APP_CONFIG.animationDuration,
+    ease: 'Back'
+  });
+}
+
+export const createTitleText = (scene) => {
+  const titleText = scene.add.text(
+    scene.getWidth() / 2,
+    scene.getHeight() / 4,
+    APP_CONFIG.title,
+    APP_FONTS.title
+  ).setOrigin(0.5, 0)
+    .setInteractive()
+    .on('pointerover', function () {
+      this.setStyle(APP_FONTS.titleHover);
+    })
+    .on('pointerout', function () {
+      this.setStyle(APP_FONTS.title);
+    });
+  scaleUp(scene, titleText);
+  return titleText;
+};
 
 export const createBtn = ({x, y, name, scene, onClick, originX = 0, originY = 0}) => scene.add.image(
   x, y, name
@@ -75,9 +112,19 @@ export const addScalingAnimation = (scene, targets, scale) => scene.tweens.add({
   targets,
   scaleX: scale,
   scaleY: scale,
-  duration: 300,
+  duration: APP_CONFIG.animationDuration,
   delay: 0,
   ease: 'Cubic.easeOut'
+});
+
+export const addJumpingAnimation = (scene, targets) => scene.tweens.add({
+  targets,
+  scale: 0.9,
+  duration: APP_CONFIG.animationDuration,
+  delay: APP_CONFIG.animationDuration,
+  ease: 'Linear',
+  yoyo: 1,
+  loop: -1
 });
 
 export const createHeadingText = (scene, titleText) => scene.add.text(
