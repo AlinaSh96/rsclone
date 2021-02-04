@@ -1,0 +1,206 @@
+@import '~normalize.css';
+@import 'fonts.scss';
+@import 'constants.scss';
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+}
+
+html {
+    font-size: 10px;
+}
+
+body {
+    font-size: 1.5rem;
+    font-family: 'Potta One', cursive;
+    overflow: hidden;
+}
+
+.wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right,
+            rgba(255, 0, 0, 0.2),
+            rgba(255, 165, 0, 0.2),
+            rgba(255, 255, 0, 0.2),
+            rgba(0, 128, 0, 0.2),
+            rgba(0, 255, 255, 0.2),
+            rgba(0, 0, 255, 0.2),
+            rgba(128, 0, 128, 0.2));
+}
+
+.auth-block {
+    --form-width: auto;
+
+    position: absolute;
+    top: 35%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 2rem;
+    width: var(--form-width);
+
+    & > *:not(:last-child) {
+        margin-bottom: 2rem;
+    }
+
+    .login-form{
+        .input {
+            width: 100%;
+            padding: 1rem;
+            outline: none;
+            border: 1px solid $color-primary;
+            background-color: $color-sec;
+            color: $color-base;
+
+            &:focus {
+                color: $color-base-sec;
+                background-color: $color-primary;
+                border-color: $color-sec;
+            }
+        }
+
+        & > *:not(:last-child) {
+            margin-bottom: 2rem;
+        }
+
+        &__error {
+            color: $color-primary-darker;
+        }
+
+        &__pwd-span {
+            font-size: 1.5rem;
+            color: $color-primary-darker;
+        }
+
+        &__pwd-checkbox{
+            cursor: pointer;
+            margin-right: 1rem;
+
+            &:hover,
+            &:active {
+                border-color: $color-sec;
+            }
+        }
+
+        &__buttons {
+            display: flex;
+            align-items: center;
+            width: 100%;
+
+            & > *:not(:last-child) {
+                margin-right: 2rem;
+            }
+        }
+
+        .button {
+            padding: 1rem;
+            min-width: 9rem;
+            outline: none;
+            cursor: pointer;
+
+            &:hover,
+            &:active {
+                border-color: $color-sec;
+            }
+        }
+
+        &__login-btn,
+        &__sign-up-btn {
+            flex-grow: 1;
+        }
+
+        &__login-btn {
+            background-color: $color-foc;
+            color: $color-base;
+            border: 1px solid $color-primary;
+        }
+
+        &__sign-up-btn {
+            background-color: $color-primary;
+            color: $color-base;
+            border: 1px solid $color-foc;
+        }
+    }
+    
+    .button-link {
+        flex-grow: 0;
+        align-self: flex-end;
+        padding: 1rem;
+        color: $color-primary-darker;
+        background-color: transparent;
+        border: none;
+        border-bottom: 1px solid $color-primary-darker;
+        outline: none;
+        cursor: pointer;
+
+        &:hover {
+            color: $color-sec-darker;
+            border-bottom: 1px solid $color-sec-darker;
+        }
+    }
+}
+
+.statistics-block {
+    --form-width: auto;
+
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 2rem;
+    width: var(--form-width);
+
+    
+    .win-text,
+    .info-text {
+        text-align: center;
+        margin-top: 3%;
+        margin-bottom: 4%;
+        color: $color-primary-darker;
+    }
+
+    table {
+        border-spacing: 0;
+        width: 100%;
+        border: 1px solid #ddd;
+        display: block;
+        max-height: 70vh;
+        overflow-y: scroll;
+    }
+
+    tbody {
+        width: 100%;
+        display: table;
+    }
+
+    th {
+    cursor: pointer;
+    }
+
+    th, td {
+    text-align: left;
+    padding: 16px;
+    }
+
+    .name-sort,
+    .score-sort {
+        color: $color-primary-darker;
+    }
+
+    tr:nth-child(even) {
+    background-color: #f2f2f2
+    }
+
+}
+
