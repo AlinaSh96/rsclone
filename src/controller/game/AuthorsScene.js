@@ -12,20 +12,17 @@ const IMG_INITIAL_SCALE = 0.4;
 
 export default class AuthorsScene extends Phaser.Scene {
   constructor() {
-    console.log('AuthorsScene >>> constructor');
     super({
       key: 'AuthorsScene'
     });
   }
 
   init() {
-    console.log('AuthorsScene >>> init');
     this.width = this.sys.canvas.width;
     this.height = this.sys.canvas.height;
   }
 
   create() {
-    console.log('AuthorsScene >>> create');
     createBackBtn(this, this.onBackBtnClick.bind(this));
     createHeadingText(this, HEADING_TEXT);
 
@@ -40,7 +37,6 @@ export default class AuthorsScene extends Phaser.Scene {
 
     offsetY += this.teamTitleText.height + MARGIN_OUTER;
     this.authorList = this._createAuthorsText(offsetY);
-    console.log(this.authorList);
 
     [
       this.madeByText,

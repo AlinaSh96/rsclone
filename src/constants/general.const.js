@@ -1,5 +1,4 @@
-const assetsFolderPath = './src/assets/';
-const imagesFolderPath = `${assetsFolderPath}images/`;
+const assetsFolderPath = './assets/';
 
 export const APP_CONFIG = {
   title: 'Flappy Bird',
@@ -47,11 +46,6 @@ export const GAME_OPTIONS = {
   localStorageName: 'bestFlappyScore',
   localStorageSound: 'flappySound',
   localStorageMusic: 'flappyMusic',
-};
-
-export const GAME_IMGS = {
-  bird: `${imagesFolderPath}bird.png`,
-  pipe: `${imagesFolderPath}pipe.png`,
 };
 
 const fontFamily = '\"Potta One\"';

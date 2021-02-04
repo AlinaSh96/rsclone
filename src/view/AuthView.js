@@ -42,7 +42,6 @@ export default class AuthView {
   }
 
   setFormWidth(width) {
-    console.log('Auth form width to set >>>', width);
     setElementVariable(this.formEl, '--form-width', `${width}px`);
   }
 

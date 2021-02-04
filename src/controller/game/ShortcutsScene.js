@@ -48,20 +48,17 @@ const SHORTCUTS_TEXT = [
 
 export default class ShortcutsScene extends Phaser.Scene {
   constructor() {
-    console.log('ShortcutsScene >>> constructor');
     super({
       key: 'ShortcutsScene'
     });
   }
 
   init() {
-    console.log('ShortcutsScene >>> init');
     this.width = this.sys.canvas.width;
     this.height = this.sys.canvas.height;
   }
 
   create() {
-    console.log('ShortcutsScene >>> create');
     createBackBtn(this, this.onBackBtnClick.bind(this));
     const headingText = createHeadingText(this, HEADING_TEXT);
 

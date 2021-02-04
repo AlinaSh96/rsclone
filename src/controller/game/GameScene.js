@@ -146,7 +146,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   onPauseBtnClick() {
-
+    // not implemented
   }
 
   setScore(score = 0) {
@@ -159,7 +159,6 @@ export default class GameScene extends Phaser.Scene {
   }
 
   die() {
-    console.log('DIE');
     Phaser.Actions.Call(
       this.pipes.getChildren(),
       pipe => pipe.body.setVelocityX(0),

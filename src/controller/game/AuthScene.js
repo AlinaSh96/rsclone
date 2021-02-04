@@ -11,20 +11,17 @@ const AUTH_FORM_WIDTH_PERCENT = 0.6;
 
 export default class AuthScene extends Phaser.Scene {
   constructor() {
-    console.log('AuthScene >>> constructor');
     super({
       key: 'AuthScene',
     });
   }
 
   init() {
-    console.log('AuthScene >>> init');
     this.width = this.sys.canvas.width; // this.cameras.main.width
     this.height = this.sys.canvas.height;
   }
 
   create() {
-    console.log('AuthScene >>> create');
     createSettingsBtn(this, this.onSettingsBtnClick.bind(this));
     createTitleText(this);
 
