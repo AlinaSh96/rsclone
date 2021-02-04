@@ -1,9 +1,9 @@
 import {changeScene} from '@utils/CommonUtils';
 import {createBackBtn, createHeadingText, addKeyHandler} from '@utils/ComponentUtils';
 import StatisticsView from '@view/StatisticsView'
+import {UI} from '../../constants/ui.const';
 
-const HEADING_TEXT = 'Statistics';
-const STATISTICS_FORM_WIDTH_PERCENT = 0.8;
+const STATISTICS_FORM_WIDTH_PERCENT = 0.9;
 
 export default class StatisticsScene extends Phaser.Scene {
   constructor() {
@@ -19,18 +19,19 @@ export default class StatisticsScene extends Phaser.Scene {
 
   create() {
     createBackBtn(this, this.onBackBtnClick.bind(this));
-    createHeadingText(this, HEADING_TEXT);
+    createHeadingText(this, this.getUIText().headingText);
 
     this.statisticsView = new StatisticsView();
     this.statisticsView.render({
-      calcFormWidth: this.calculateStatisticsFormWidth.bind(this)
+      calcFormWidth: this.calculateStatisticsFormWidth.bind(this),
+      getUIText: this.getUIText.bind(this)
     });
 
     addKeyHandler(this, this._handleKey.bind(this));
   }
 
   calculateStatisticsFormWidth() {
-    return this.width * STATISTICS_FORM_WIDTH_PERCENT;
+    return this.sys.canvas.getBoundingClientRect().width * STATISTICS_FORM_WIDTH_PERCENT;
   }
 
   _handleKey(e) {
@@ -44,6 +45,10 @@ export default class StatisticsScene extends Phaser.Scene {
       default:
         break;
     }
+  }
+
+  getUIText() {
+    return UI[this.registry.get('lang')].statistics;
   }
 
   onBackBtnClick() {

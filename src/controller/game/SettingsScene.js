@@ -2,8 +2,9 @@ import {APP_FONTS} from '@constants/general.const';
 import {changeScene} from '@utils/CommonUtils';
 import {scaleUp, createBackBtn, createBtn, createHeadingText, addKeyHandler, handleMusic} from '@utils/ComponentUtils';
 import {setMusicSetting, setSoundSetting} from '@utils/StorageUtils';
+import {UI} from '../../constants/ui.const';
+import {setLangSetting} from '../../utils/StorageUtils';
 
-const HEADING_TEXT = 'Settings';
 const DEFAULT_REDIRECT_SCENE = 'AuthScene';
 const MARGIN_LEFT = 60;
 const MARGIN_BOTTOM = 50;
@@ -23,10 +24,18 @@ export default class SettingsScene extends Phaser.Scene {
 
   create() {
     createBackBtn(this, this.onBackBtnClick.bind(this));
-    createHeadingText(this, HEADING_TEXT);
+    createHeadingText(this, this._getUIText().headingText);
     this._createMenuList();
 
     addKeyHandler(this, this._handleKey.bind(this));
+  }
+
+  _getUIText() {
+    return UI[this.registry.get('lang')].settings;
+  }
+
+  _getUIGeneralText() {
+    return UI[this.registry.get('lang')];
   }
 
   _handleKey(e) {
@@ -52,6 +61,10 @@ export default class SettingsScene extends Phaser.Scene {
         this.onSoundBtnClick();
         break;
       }
+      case 'KeyL': {
+        this.onLangBtnClick();
+        break;
+      }
       default:
         break;
     }
@@ -63,22 +76,37 @@ export default class SettingsScene extends Phaser.Scene {
     this.menuList = [
       {
         name: `sound${this.registry.get('sound') ? 'On' : 'Off'}`,
-        text: `Sound: ${this.registry.get('sound') ? 'ON' : 'OFF'}`,
+        text: `${this._getUIText().soundText}: ${
+          this.registry.get('sound')
+            ? this._getUIGeneralText().onText
+            : this._getUIGeneralText().offText
+        }`,
         onClick: this.onSoundBtnClick.bind(this)
       },
       {
         name: `music${this.registry.get('music') ? 'On' : 'Off'}`,
-        text: `Music: ${this.registry.get('music') ? 'ON' : 'OFF'}`,
+        text: `${this._getUIText().musicText}: ${
+          this.registry.get('music')
+            ? this._getUIGeneralText().onText
+            : this._getUIGeneralText().offText
+        }`,
         onClick: this.onMusicBtnClick.bind(this)
       },
       {
+        name: 'language',
+        text: `${this._getUIText().languageText}: ${
+          this._getUIGeneralText().name
+        }`,
+        onClick: this.onLangBtnClick.bind(this)
+      },
+      {
         name: 'authors',
-        text: 'Authors',
+        text: this._getUIText().authorsText,
         onClick: this.onAuthorsBtnClick.bind(this)
       },
       {
         name: 'shortcuts',
-        text: 'Shortcuts',
+        text: this._getUIText().shortcutsText,
         onClick: this.onShortcutsBtnClick.bind(this)
       }
     ].map(({name, onClick, text}) => {
@@ -123,6 +151,17 @@ export default class SettingsScene extends Phaser.Scene {
       });
   }
 
+  _getNextLang() {
+    const curLang = this.registry.get('lang');
+    const langs = Object.keys(UI);
+    const nextIndex = (langs.indexOf(curLang) + 1) % langs.length;
+    return langs[nextIndex];
+  }
+
+  _handleLangSwitch() {
+    this.scene.start('SettingsScene');
+  }
+
   onBackBtnClick() {
     changeScene(this.redirectScene, this);
   }
@@ -130,7 +169,11 @@ export default class SettingsScene extends Phaser.Scene {
   onSoundBtnClick() {
     this.registry.set('sound', this.registry.get('sound') ? 0 : 1);
     setSoundSetting(this.registry.get('sound'));
-    this.menuList[0].btnText.text = `Sound: ${this.registry.get('sound') ? 'ON' : 'OFF'}`;
+    this.menuList[0].btnText.text = `${this._getUIText().soundText}: ${
+      this.registry.get('sound')
+        ? this._getUIGeneralText().onText
+        : this._getUIGeneralText().offText
+    }`;
     this.menuList[0].btn.setTexture(`sound${this.registry.get('sound') ? 'On' : 'Off'}`);
 
   }
@@ -138,9 +181,23 @@ export default class SettingsScene extends Phaser.Scene {
   onMusicBtnClick() {
     this.registry.set('music', this.registry.get('music') ? 0 : 1);
     setMusicSetting(this.registry.get('music'));
-    this.menuList[1].btnText.text = `Music: ${this.registry.get('music') ? 'ON' : 'OFF'}`;
+    this.menuList[1].btnText.text = `${this._getUIText().musicText}: ${
+      this.registry.get('music')
+        ? this._getUIGeneralText().onText
+        : this._getUIGeneralText().offText
+    }`;
     this.menuList[1].btn.setTexture(`music${this.registry.get('music') ? 'On' : 'Off'}`);
     handleMusic(this);
+  }
+
+  onLangBtnClick() {
+    const nextLang = this._getNextLang();
+    this.registry.set('lang', nextLang);
+    setLangSetting(nextLang);
+    this.menuList[2].btnText.text = `${this._getUIText().languageText}: ${
+      this._getUIGeneralText().name
+    }`;
+    this._handleLangSwitch();
   }
 
   onAuthorsBtnClick() {

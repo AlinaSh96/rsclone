@@ -7,8 +7,9 @@ import {
   handleMusic
 } from '@utils/ComponentUtils';
 import { setBestScore } from '@utils/StorageUtils';
+import {UI} from '../../constants/ui.const';
 
-const AUTH_FORM_WIDTH_PERCENT = 0.6;
+const AUTH_FORM_WIDTH_PERCENT = 0.8;
 
 export default class AuthScene extends Phaser.Scene {
   constructor() {
@@ -32,6 +33,7 @@ export default class AuthScene extends Phaser.Scene {
     this.authController.start({
       calcFormWidth: this.calculateAuthFormWidth.bind(this),
       login: this.login.bind(this),
+      getUIText: this.getUIText.bind(this)
     });
 
     addKeyHandler(this, this._handleKey.bind(this));
@@ -53,6 +55,10 @@ export default class AuthScene extends Phaser.Scene {
     }
   }
 
+  getUIText() {
+    return UI[this.registry.get('lang')].auth;
+  }
+
   onSettingsBtnClick() {
     changeScene('SettingsScene', this, { scene: 'AuthScene' });
     this.authController.stop();
@@ -67,7 +73,7 @@ export default class AuthScene extends Phaser.Scene {
   }
 
   calculateAuthFormWidth() {
-    return this.width * AUTH_FORM_WIDTH_PERCENT;
+    return this.sys.canvas.getBoundingClientRect().width * AUTH_FORM_WIDTH_PERCENT;
   }
 
   login(data = {}) {

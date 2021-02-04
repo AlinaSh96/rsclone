@@ -23,6 +23,11 @@ const getSoundSetting = () =>
 
 const setSoundSetting = (sound) => save(GAME_OPTIONS.localStorageSound, sound);
 
+const getLangSetting = () =>
+  localStorage.getItem(GAME_OPTIONS.localStorageLang);
+
+const setLangSetting = (lang) => save(GAME_OPTIONS.localStorageLang, lang);
+
 export {
   getBestScore,
   setBestScore,
@@ -31,5 +36,7 @@ export {
   getMusicSetting,
   setMusicSetting,
   getSoundSetting,
-  setSoundSetting
+  setSoundSetting,
+  getLangSetting,
+  setLangSetting
 };

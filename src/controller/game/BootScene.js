@@ -2,6 +2,8 @@ import {APP_CONFIG, COLORS} from '@constants/general.const';
 import {changeScene} from '@utils/CommonUtils';
 import WebFont from 'webfontloader';
 import {getMusicSetting, getSoundSetting, setMusicSetting, setSoundSetting} from '@utils/StorageUtils';
+import {getLangSetting, setLangSetting} from '../../utils/StorageUtils';
+import {UI} from '../../constants/ui.const';
 
 const LOADING_BAR = {
   height: 20,
@@ -29,8 +31,12 @@ export default class BootScene extends Phaser.Scene {
     if (getMusicSetting() === null) {
       setMusicSetting(1);
     }
+    if (getLangSetting() === null || !UI[getLangSetting()]) {
+      setLangSetting(APP_CONFIG.defaultLang);
+    }
     this.registry.set('sound', +getSoundSetting());
     this.registry.set('music', +getMusicSetting());
+    this.registry.set('lang', getLangSetting());
   }
 
   preload() {

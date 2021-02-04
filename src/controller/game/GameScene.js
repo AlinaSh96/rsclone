@@ -4,6 +4,7 @@ import {addKeyHandler} from '@utils/ComponentUtils';
 import {Pipe} from '@model/Pipe';
 import {changeScene, getRandomNumber} from '@utils/CommonUtils';
 import {Bird} from '@model/Bird';
+import {UI} from '../../constants/ui.const';
 
 const PIPE_DELAY = 2000;
 const BIRD_START_POSITION = {
@@ -46,6 +47,10 @@ export default class GameScene extends Phaser.Scene {
       null,
       this
     );
+  }
+
+  _getUIText() {
+    return UI[this.registry.get('lang')].game;
   }
 
   _addBird() {
@@ -136,7 +141,8 @@ export default class GameScene extends Phaser.Scene {
 
   setScore(score = 0) {
     this.score = score;
-    this.scoreText.text = `Score: ${this.score}\nBest: ${this.registry.get('highscore')}`;
+    this.scoreText.text = `${this._getUIText().scoreText}: ${this.score}\n${
+      this._getUIText().bestText}: ${this.registry.get('highscore')}`;
   }
 
   updateScore() {

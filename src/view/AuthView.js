@@ -1,4 +1,4 @@
-import { createElement, setElementVariable } from '@utils/CommonUtils';
+import {createElement, setElementVariable} from '@utils/CommonUtils';
 import AuthAPIService from '@services/AuthAPIService';
 import StatisticsAPIService from '@services/StatisticsAPIService';
 
@@ -8,20 +8,21 @@ export default class AuthView {
   }
 
   render(handlers) {
+    this.handlers = handlers;
     const authForm = document.querySelector('.auth-block');
     if (authForm) {
       document.querySelector('.auth-block').remove();
     }
     this.formEl = createElement('div', 'auth-block');
     this.formEl.innerHTML = `
-<button class="button-link auth-block__guest-login" type="button">Proceed as guest</button>
+<button class="button-link auth-block__guest-login" type="button">${handlers.getUIText().proceedAsGuest}</button>
 <div class="login-form">
-  <input class="input login-form__login" type="text" placeholder="Login" maxlength="15" >
-  <input class="input login-form__password" type="password" placeholder="Password" autocomplete="current-password" maxlength="15">
-  <input class="login-form__pwd-checkbox" type="checkbox"><span class="login-form__pwd-span">Show Password</span>
+  <input class="input login-form__login" type="text" placeholder="${handlers.getUIText().loginPlaceholder}" maxlength="15" >
+  <input class="input login-form__password" type="password" placeholder="${handlers.getUIText().passwordPlaceholder}" autocomplete="current-password" maxlength="15">
+  <input class="login-form__pwd-checkbox" type="checkbox"><span class="login-form__pwd-span">${handlers.getUIText().showPasswordText}</span>
   <div class="login-form__buttons">
-      <button class="button login-form__login-btn"">Login</button>
-      <button class="button login-form__sign-up-btn" >Sign up</button>
+      <button class="button login-form__login-btn"">${handlers.getUIText().loginBtnText}</button>
+      <button class="button login-form__sign-up-btn" >${handlers.getUIText().signUpBtnText}</button>
   </div>
   <div class="login-form__error"></div>
 <div>`;
@@ -45,13 +46,13 @@ export default class AuthView {
     setElementVariable(this.formEl, '--form-width', `${width}px`);
   }
 
-  handleSignUpClick({ login }) {
+  handleSignUpClick({login}) {
     return async (e) => {
       const validationErrors = this._validatePassword(this.loginPassword.value);
       if (validationErrors.length > 0) {
-        const validationMsg =
-          'Password must contain the following: \n' +
-          validationErrors.join('\n');
+        const validationMsg = `${this.handlers.getUIText().passwordMustContainText}: \n${
+          validationErrors.join('\n')
+        }`;
         this.errorElement.innerText = validationMsg;
         return;
       }
@@ -64,12 +65,12 @@ export default class AuthView {
 
       if (loginResponseData.status === 201) {
         const score = [
-          ...(await StatisticsAPIService.getUserStatistics()).data,
+          ...(await StatisticsAPIService.getUserStatistics()).data
         ].sort((a, b) => b.score - a.score)[0];
 
         login({
           user: this.loginInput.value,
-          score: score ? score.score : 0,
+          score: score ? score.score : 0
         });
       } else {
         this.errorElement.innerText = loginResponseData.data.message;
@@ -77,7 +78,7 @@ export default class AuthView {
     };
   }
 
-  handleLoginClick({ login }) {
+  handleLoginClick({login}) {
     return async (e) => {
       let loginResponseData = await AuthAPIService.login(
         this.loginInput.value,
@@ -86,12 +87,12 @@ export default class AuthView {
 
       if (loginResponseData.status === 200) {
         const score = [
-          ...(await StatisticsAPIService.getUserStatistics()).data,
+          ...(await StatisticsAPIService.getUserStatistics()).data
         ].sort((a, b) => b.score - a.score)[0];
 
         login({
           user: this.loginInput.value,
-          score: score ? score.score : 0,
+          score: score ? score.score : 0
         });
       } else {
         this.errorElement.innerText = loginResponseData.data.reason;
@@ -99,7 +100,7 @@ export default class AuthView {
     };
   }
 
-  handleGuestLoginClick({ login }) {
+  handleGuestLoginClick({login}) {
     return (e) => login();
   }
 
@@ -127,16 +128,16 @@ export default class AuthView {
     let messages = [];
 
     if (password.length < 6) {
-      messages.push('- a minimum of 6 characters in length');
+      messages.push(this.handlers.getUIText().minCharsLengthText);
     }
     if (!password.match(/[0-9]/g)) {
-      messages.push('- a minimum of 1 numeric character [0-9]');
+      messages.push(this.handlers.getUIText().minOneNumText);
     }
     if (!password.match(/[a-z]/g)) {
-      messages.push('- a minimum of 1 lower case letter [a-z]');
+      messages.push(this.handlers.getUIText().minOneLowerCaseText);
     }
     if (!password.match(/[A-Z]/g)) {
-      messages.push('- a minimum of 1 upper case letter [A-Z]');
+      messages.push(this.handlers.getUIText().minOneUpperCaseText);
     }
     return messages;
   }

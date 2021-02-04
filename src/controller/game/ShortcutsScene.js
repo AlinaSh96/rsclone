@@ -1,50 +1,9 @@
 import {APP_CONFIG, APP_FONTS} from '@constants/general.const';
 import {changeScene} from '@utils/CommonUtils';
 import {addKeyHandler, createBackBtn, createHeadingText, scaleUp} from '@utils/ComponentUtils';
+import {UI} from '../../constants/ui.const';
 
-const HEADING_TEXT = 'Shortcuts';
 const MARGIN = 10;
-const SHORTCUTS_TEXT = [
-  {
-    title: 'Main menu',
-    shortcuts: [
-      'S - Show/Hide settings',
-      'T - Show/Hide statistics',
-      'Space - Start game/Enter as guest',
-      'X - Logout'
-    ]
-  },
-  {
-    title: 'Settings',
-    shortcuts: [
-      'V - Turn sound on/off',
-      'M - Turn music on/off',
-      'A - Show/Hide authors',
-      'K - Show/Hide shortcuts'
-    ]
-  },
-  {
-    title: 'In game',
-    shortcuts: [
-      'Space - Fly up',
-      // 'P - Pause'
-    ]
-  },
-  // {
-  //   title: 'Pause screen',
-  //   shortcuts: [
-  //     'B - Back to main menu',
-  //     'P - Back to game'
-  //   ]
-  // },
-  {
-    title: 'Game over screen',
-    shortcuts: [
-      'B - Back to main menu',
-      'R - Restart game'
-    ]
-  }
-];
 
 export default class ShortcutsScene extends Phaser.Scene {
   constructor() {
@@ -60,10 +19,10 @@ export default class ShortcutsScene extends Phaser.Scene {
 
   create() {
     createBackBtn(this, this.onBackBtnClick.bind(this));
-    const headingText = createHeadingText(this, HEADING_TEXT);
+    const headingText = createHeadingText(this, this._getUIText().headingText);
 
     let offsetY = APP_CONFIG.edgeMargin * 2 + headingText.height;
-    SHORTCUTS_TEXT
+    this._getUIText().shortcutItemsText
       .forEach(({title, shortcuts}) => {
         const text = this.add.text(
           this.width / 2,
@@ -99,6 +58,10 @@ export default class ShortcutsScene extends Phaser.Scene {
       default:
         break;
     }
+  }
+
+  _getUIText() {
+    return UI[this.registry.get('lang')].shortcuts;
   }
 
   onBackBtnClick() {

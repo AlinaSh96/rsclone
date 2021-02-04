@@ -1,10 +1,8 @@
 import {APP_FONTS, AUTHORS, RSS_LINK} from '@constants/general.const';
 import {changeScene} from '@utils/CommonUtils';
 import {scaleUp, createBackBtn, addScalingAnimation, createHeadingText, addKeyHandler} from '@utils/ComponentUtils';
+import {UI} from '../../constants/ui.const';
 
-const HEADING_TEXT = 'Authors';
-const MADE_BY_TEXT = 'Made special for';
-const TEAM_TITLE_TEXT = 'The team';
 const MARGIN_INNER = 30;
 const MARGIN_OUTER = 60;
 const IMG_SCALE = 0.45;
@@ -24,7 +22,7 @@ export default class AuthorsScene extends Phaser.Scene {
 
   create() {
     createBackBtn(this, this.onBackBtnClick.bind(this));
-    createHeadingText(this, HEADING_TEXT);
+    createHeadingText(this, this._getUIText().headingText);
 
     let offsetY = this.height / 5;
     this.madeByText = this._createMadeByText(offsetY);
@@ -60,11 +58,15 @@ export default class AuthorsScene extends Phaser.Scene {
     }
   }
 
+  _getUIText() {
+    return UI[this.registry.get('lang')].authors;
+  }
+
   _createMadeByText(offsetY) {
     return this.add.text(
       this.width / 2,
       offsetY,
-      MADE_BY_TEXT,
+      this._getUIText().madeByText,
       APP_FONTS.base
     ).setOrigin(0.5, 0);
   }
@@ -92,7 +94,7 @@ export default class AuthorsScene extends Phaser.Scene {
     return this.add.text(
       this.width / 2,
       offsetY,
-      TEAM_TITLE_TEXT,
+      this._getUIText().teamTitleText,
       APP_FONTS.base
     ).setOrigin(0.5, 0);
   }

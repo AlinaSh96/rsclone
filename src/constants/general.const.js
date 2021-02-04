@@ -5,6 +5,7 @@ export const APP_CONFIG = {
   assetsPackPath: `${assetsFolderPath}pack.json`,
   sceneChangeDuration: 150,
   maxWidth: 720,
+  defaultLang: 'en',
 
   maxHeight: 1080,
   edgeMargin: 10,
@@ -42,8 +43,9 @@ export const GAME_OPTIONS = {
   pipeHole: [100, 130],
   birdFlapPower: 400, // flap thrust
   localStorageName: 'bestFlappyScore',
-  localStorageSound: 'flappySound',
+  localStorageSound: 'flappySound',//todo move to app_config
   localStorageMusic: 'flappyMusic',
+  localStorageLang: 'flappyLang'
 };
 
 const fontFamily = '\"Potta One\"';
