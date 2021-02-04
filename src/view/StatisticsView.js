@@ -28,6 +28,7 @@ export default class StatisticsView {
     this.tableHeadName = document.querySelector('.name-sort');
     this.tableHeadScore = document.querySelector('.score-sort');
     this.table = document.querySelector('.statisticsTable tbody');
+    this.tableEl = document.querySelector('.statisticsTable');
     this.setFormWidth(handlers.calcFormWidth());
 
     this.table.append(...await this.getUsersData());
@@ -36,21 +37,24 @@ export default class StatisticsView {
   }
 
   _sortTable(n) {
-    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-    table = document.querySelector('.statisticsTable');
-    switching = true;
-    dir = 'asc';
+    let i;
+    let x;
+    let y;
+    let shouldSwitch;
+    let switchcount = 0;
+    let switching = true;
+    let dir = 'asc';
     while (switching) {
       switching = false;
-      rows = table.rows;
-      for (i = 1; i < (rows.length - 1); i++) {
+      const {rows} = this.tableEl;
+      for (i = 1; i < (rows.length - 1); i++) { // eslint-disable-line no-plusplus
         shouldSwitch = false;
         x = rows[i].getElementsByTagName('TD')[n];
         y = rows[i + 1].getElementsByTagName('TD')[n];
         let result;
         if (dir === 'asc') {
           if (n === 1) {
-            result = parseInt(x.innerHTML.toLowerCase()) > parseInt(y.innerHTML.toLowerCase());
+            result = parseInt(x.innerHTML.toLowerCase(), 10) > parseInt(y.innerHTML.toLowerCase(), 10);
           } else {
             result = x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase();
           }
@@ -58,12 +62,9 @@ export default class StatisticsView {
             shouldSwitch = true;
             break;
           }
-
-
         } else if (dir === 'desc') {
-
           if (n === 1) {
-            result = parseInt(x.innerHTML.toLowerCase()) < parseInt(y.innerHTML.toLowerCase());
+            result = parseInt(x.innerHTML.toLowerCase(), 10) < parseInt(y.innerHTML.toLowerCase(), 10);
           } else {
             result = x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase();
           }
@@ -76,12 +77,10 @@ export default class StatisticsView {
       if (shouldSwitch) {
         rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
         switching = true;
-        switchcount++;
-      } else {
-        if (switchcount === 0 && dir === 'asc') {
-          dir = 'desc';
-          switching = true;
-        }
+        switchcount += 1;
+      } else if (switchcount === 0 && dir === 'asc') {
+        dir = 'desc';
+        switching = true;
       }
     }
   }
@@ -93,17 +92,17 @@ export default class StatisticsView {
 
   fillTable(records) {
     const tableRows = [];
-    records.forEach(record => {
+    records.forEach((record) => {
       const tr = createElement('tr');
       const tdName = createElement('td');
       tdName.innerText = record.user;
 
       const tsScore = createElement('td');
       tsScore.innerText = record.score;
-      tr.append(tdName, tsScore)
+      tr.append(tdName, tsScore);
 
       tableRows.push(tr);
-    })
+    });
     return tableRows;
   }
 
@@ -111,13 +110,9 @@ export default class StatisticsView {
     setElementVariable(this.formEl, '--form-width', `${width}px`);
   }
 
-  _addEventListeners(handlers) {
-    this.tableHeadName.addEventListener('click', () =>
-      this._sortTable(0)
-    );
-    this.tableHeadScore.addEventListener('click', () =>
-      this._sortTable(1)
-    );
+  _addEventListeners() {
+    this.tableHeadName.addEventListener('click', () => this._sortTable(0));
+    this.tableHeadScore.addEventListener('click', () => this._sortTable(1));
   }
 
   destroy() {

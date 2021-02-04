@@ -6,7 +6,7 @@ export const UI = {
     highscoreText: 'Highscore',
     menu: {
       playText: 'Press Space to play',
-      guestUserName: 'Guest'
+      guestUserName: 'Guest',
     },
     auth: {
       proceedAsGuest: 'Proceed as guest',
@@ -19,7 +19,7 @@ export const UI = {
       minOneNumText: '- a minimum of 1 numeric character [0-9]',
       minOneLowerCaseText: '- a minimum of 1 lower case letter [a-z]',
       minOneUpperCaseText: '- a minimum of 1 upper case letter [A-Z]',
-      passwordMustContainText: 'Password must contain the following'
+      passwordMustContainText: 'Password must contain the following',
     },
     settings: {
       headingText: 'Settings',
@@ -27,20 +27,20 @@ export const UI = {
       musicText: 'Music',
       authorsText: 'Authors',
       languageText: 'Language',
-      shortcutsText: 'Shortcuts'
+      shortcutsText: 'Shortcuts',
     },
     authors: {
       headingText: 'Authors',
       madeByText: 'Made special for',
-      teamTitleText: 'The team'
+      teamTitleText: 'The team',
     },
     gameOver: {
       gameOverText: 'GAME OVER',
-      scoreText: 'Score'
+      scoreText: 'Score',
     },
     game: {
       bestText: 'Best',
-      scoreText: 'Score'
+      scoreText: 'Score',
     },
     shortcuts: {
       headingText: 'Shortcuts',
@@ -51,8 +51,8 @@ export const UI = {
             'S - Show/Hide settings',
             'T - Show/Hide statistics',
             'Space - Start game/Enter as guest',
-            'X - Logout'
-          ]
+            'X - Logout',
+          ],
         },
         {
           title: 'Settings',
@@ -61,31 +61,31 @@ export const UI = {
             'M - Turn music on/off',
             'A - Show/Hide authors',
             'K - Show/Hide shortcuts',
-            'L - Switch language'
-          ]
+            'L - Switch language',
+          ],
         },
         {
           title: 'In game',
           shortcuts: [
-            'Space - Fly up'
-          ]
+            'Space - Fly up',
+          ],
         },
         {
           title: 'Game over screen',
           shortcuts: [
             'B - Back to main menu',
-            'R - Restart game'
-          ]
-        }
-      ]
+            'R - Restart game',
+          ],
+        },
+      ],
     },
     statistics: {
       headingText: 'Statistics',
       playToWinText: 'Play to win, but enjoy the fun!',
       youMustPlayText: 'You must play at least one game to appear in statistics',
       nameText: 'Name',
-      scoreText: 'Score'
-    }
+      scoreText: 'Score',
+    },
   },
   de: {
     name: 'Deu',
@@ -94,7 +94,7 @@ export const UI = {
     highscoreText: 'Highscore',
     menu: {
       playText: 'Drücken Sie die Leertaste',
-      guestUserName: 'Gast'
+      guestUserName: 'Gast',
     },
     auth: {
       proceedAsGuest: 'Fahren Sie als Gast fort',
@@ -107,7 +107,7 @@ export const UI = {
       minOneNumText: '- mindestens 1 numeric Zeichen [0-9]',
       minOneLowerCaseText: '- mindestens 1 Kleinbuchstabe [a-z]',
       minOneUpperCaseText: '- mindestens 1 Großbuchstaben [A-Z]',
-      passwordMustContainText: 'Passwort muss enthalten'
+      passwordMustContainText: 'Passwort muss enthalten',
     },
     settings: {
       headingText: 'Einstellungen',
@@ -115,20 +115,20 @@ export const UI = {
       musicText: 'Musik',
       authorsText: 'Autoren',
       languageText: 'Sprache',
-      shortcutsText: 'Verknüpfungen'
+      shortcutsText: 'Verknüpfungen',
     },
     authors: {
       headingText: 'Autoren',
       madeByText: 'Speziell gemacht für',
-      teamTitleText: 'Das Team'
+      teamTitleText: 'Das Team',
     },
     gameOver: {
       gameOverText: 'SPIEL IST AUS',
-      scoreText: 'Ergebnis'
+      scoreText: 'Ergebnis',
     },
     game: {
       bestText: 'Beste',
-      scoreText: 'Ergebnis'
+      scoreText: 'Ergebnis',
     },
     shortcuts: {
       headingText: 'Verknüpfungen',
@@ -139,8 +139,8 @@ export const UI = {
             'S - Einstellungen auf/aus',
             'T - SStatistiken auf/aus',
             'Leertaste - Spiel/Als Gast eingeben',
-            'X - Ausloggen'
-          ]
+            'X - Ausloggen',
+          ],
         },
         {
           title: 'Einstellungen',
@@ -149,30 +149,30 @@ export const UI = {
             'M - Musik auf/aus',
             'A - Autoren auf/aus',
             'K - Verknüpfungen auf/aus',
-            'L - Sprache wechseln'
-          ]
+            'L - Sprache wechseln',
+          ],
         },
         {
           title: 'Im Spiel',
           shortcuts: [
-            'Leertaste - Hochfliegen'
-          ]
+            'Leertaste - Hochfliegen',
+          ],
         },
         {
           title: 'Spiel über dem Bildschirm',
           shortcuts: [
             'B - Zurück zum Hauptmenü',
-            'R - Spiel neustarten'
-          ]
-        }
-      ]
+            'R - Spiel neustarten',
+          ],
+        },
+      ],
     },
     statistics: {
       headingText: 'Statistik',
       playToWinText: 'Spielen Sie, um zu gewinnen, aber genießen Sie den Spaß!',
       youMustPlayText: 'Sie müssen mindestens ein Spiel spielen, um in der Statistik angezeigt zu werden',
       nameText: 'Name',
-      scoreText: 'Ergebnis'
-    }
-  }
-}
+      scoreText: 'Ergebnis',
+    },
+  },
+};

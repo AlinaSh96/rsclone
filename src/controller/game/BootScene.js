@@ -1,23 +1,25 @@
 import {APP_CONFIG, COLORS} from '@constants/general.const';
 import {changeScene} from '@utils/CommonUtils';
 import WebFont from 'webfontloader';
-import {getMusicSetting, getSoundSetting, setMusicSetting, setSoundSetting} from '@utils/StorageUtils';
+import {
+  getMusicSetting, getSoundSetting, setMusicSetting, setSoundSetting,
+} from '@utils/StorageUtils';
 import {getLangSetting, setLangSetting} from '../../utils/StorageUtils';
 import {UI} from '../../constants/ui.const';
 
 const LOADING_BAR = {
   height: 20,
-  border: 2
+  border: 2,
 };
 
 const PROGRESS_BAR = {
-  height: 16
+  height: 16,
 };
 
 export default class BootScene extends Phaser.Scene {
   constructor() {
     super({
-      key: 'BootScene'
+      key: 'BootScene',
     });
   }
 
@@ -60,7 +62,7 @@ export default class BootScene extends Phaser.Scene {
       this.width / 4,
       this.height / 2 - PROGRESS_BAR.height,
       (this.width / 2) * v,
-      PROGRESS_BAR.height
+      PROGRESS_BAR.height,
     );
   }
 
@@ -71,7 +73,7 @@ export default class BootScene extends Phaser.Scene {
       this.width / 4 - LOADING_BAR.border,
       this.height / 2 - (LOADING_BAR.height - LOADING_BAR.border),
       this.width / 2 + LOADING_BAR.border * 2,
-      LOADING_BAR.height
+      LOADING_BAR.height,
     );
     this.progressBar = this.add.graphics();
   }

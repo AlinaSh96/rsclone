@@ -9,11 +9,13 @@ const STEP_ANGLE = 2;
 const BIRD_SIZES = {
   width: 17,
   height: 12,
-  scale: 3
+  scale: 3,
 };
 
-export class Bird extends Phaser.GameObjects.Image {
-  constructor({scene, x, y, texture, frame}) {
+export default class Bird extends Phaser.GameObjects.Image {
+  constructor({
+    scene, x, y, texture, frame,
+  }) {
     super(scene, x, y, texture, frame);
 
     this.setScale(BIRD_SIZES.scale);
@@ -27,7 +29,7 @@ export class Bird extends Phaser.GameObjects.Image {
     this.body.setSize(BIRD_SIZES.width, BIRD_SIZES.height);
 
     this.jumpKey = this.scene.input.keyboard.addKey(
-      Phaser.Input.Keyboard.KeyCodes.SPACE
+      Phaser.Input.Keyboard.KeyCodes.SPACE,
     );
     this.scene.input.on('pointerdown', this.fly, this);
 
@@ -72,7 +74,7 @@ export class Bird extends Phaser.GameObjects.Image {
       duration: BIRD_FLY_DURATION,
       ease: 'Power0',
       repeat: 0,
-      yoyo: false
+      yoyo: false,
     });
   }
 }

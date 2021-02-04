@@ -1,6 +1,6 @@
-import { BASE_BE_URL } from '@constants/general.const';
+import {BASE_BE_URL} from '@constants/general.const';
 import axios from 'axios';
-import { getAuthToken } from '@utils/StorageUtils';
+import {getAuthToken} from '@utils/StorageUtils';
 
 const baseAuthUrl = `${BASE_BE_URL}/statistics`;
 
@@ -20,7 +20,7 @@ export default {
     }
   },
   async getUserStatistics() {
-    const headers = { Authorization: getAuthToken() };
+    const headers = {Authorization: getAuthToken()};
     let response = null;
 
     try {
@@ -36,7 +36,7 @@ export default {
     }
   },
   async postUserStatistic(userScore) {
-    const headers = { Authorization: getAuthToken() };
+    const headers = {Authorization: getAuthToken()};
     let response = null;
 
     try {
@@ -44,7 +44,7 @@ export default {
         method: 'post',
         baseURL: baseAuthUrl,
         url: '',
-        data: { score: userScore },
+        data: {score: userScore},
         headers,
       });
       return response;

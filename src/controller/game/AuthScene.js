@@ -1,12 +1,12 @@
 import AuthController from '@controller/AuthController';
-import { changeScene } from '@utils/CommonUtils';
+import {changeScene} from '@utils/CommonUtils';
 import {
   addKeyHandler,
   createSettingsBtn,
   createTitleText,
-  handleMusic
+  handleMusic,
 } from '@utils/ComponentUtils';
-import { setBestScore } from '@utils/StorageUtils';
+import {setBestScore} from '@utils/StorageUtils';
 import {UI} from '../../constants/ui.const';
 
 const AUTH_FORM_WIDTH_PERCENT = 0.8;
@@ -33,7 +33,7 @@ export default class AuthScene extends Phaser.Scene {
     this.authController.start({
       calcFormWidth: this.calculateAuthFormWidth.bind(this),
       login: this.login.bind(this),
-      getUIText: this.getUIText.bind(this)
+      getUIText: this.getUIText.bind(this),
     });
 
     addKeyHandler(this, this._handleKey.bind(this));
@@ -60,7 +60,7 @@ export default class AuthScene extends Phaser.Scene {
   }
 
   onSettingsBtnClick() {
-    changeScene('SettingsScene', this, { scene: 'AuthScene' });
+    changeScene('SettingsScene', this, {scene: 'AuthScene'});
     this.authController.stop();
   }
 

@@ -15,18 +15,18 @@ export const gameConfig = {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,
     width: 720,
-    height: 1080
+    height: 1080,
   },
   input: {
-    keyboard: true
+    keyboard: true,
   },
   physics: {
     default: 'arcade',
     arcade: {
       gravity: {
-        y: 0
-      }
-    }
+        y: 0,
+      },
+    },
   },
   parent: 'game',
   scene: [
@@ -38,13 +38,13 @@ export const gameConfig = {
     ShortcutsScene,
     GameScene,
     GameOverScene,
-    StatisticsScene
+    StatisticsScene,
   ],
   audio: {
-    disableWebAudio: true
+    disableWebAudio: true,
   },
   render: {
     pixelArt: true,
-    antialias: false
-  }
+    antialias: false,
+  },
 };

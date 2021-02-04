@@ -1,6 +1,8 @@
 import {APP_CONFIG, APP_FONTS} from '@constants/general.const';
 import {changeScene} from '@utils/CommonUtils';
-import {addKeyHandler, createBackBtn, createHeadingText, scaleUp} from '@utils/ComponentUtils';
+import {
+  addKeyHandler, createBackBtn, createHeadingText, scaleUp,
+} from '@utils/ComponentUtils';
 import {UI} from '../../constants/ui.const';
 
 const MARGIN = 10;
@@ -8,7 +10,7 @@ const MARGIN = 10;
 export default class ShortcutsScene extends Phaser.Scene {
   constructor() {
     super({
-      key: 'ShortcutsScene'
+      key: 'ShortcutsScene',
     });
   }
 
@@ -28,17 +30,17 @@ export default class ShortcutsScene extends Phaser.Scene {
           this.width / 2,
           offsetY,
           title,
-          APP_FONTS.base
+          APP_FONTS.base,
         ).setOrigin(0.5, 0);
         scaleUp(this, text);
         offsetY += text.height + MARGIN;
 
-        shortcuts.forEach(curShortcut => {
+        shortcuts.forEach((curShortcut) => {
           const shortcutsText = this.add.text(
             this.width / 2,
             offsetY,
             curShortcut,
-            APP_FONTS.small
+            APP_FONTS.small,
           ).setOrigin(0.5, 0);
           scaleUp(this, shortcutsText);
           offsetY += shortcutsText.height + MARGIN;

@@ -1,6 +1,6 @@
 import {changeScene} from '@utils/CommonUtils';
 import {createBackBtn, createHeadingText, addKeyHandler} from '@utils/ComponentUtils';
-import StatisticsView from '@view/StatisticsView'
+import StatisticsView from '@view/StatisticsView';
 import {UI} from '../../constants/ui.const';
 
 const STATISTICS_FORM_WIDTH_PERCENT = 0.9;
@@ -8,7 +8,7 @@ const STATISTICS_FORM_WIDTH_PERCENT = 0.9;
 export default class StatisticsScene extends Phaser.Scene {
   constructor() {
     super({
-      key: 'StatisticsScene'
+      key: 'StatisticsScene',
     });
   }
 
@@ -24,7 +24,7 @@ export default class StatisticsScene extends Phaser.Scene {
     this.statisticsView = new StatisticsView();
     this.statisticsView.render({
       calcFormWidth: this.calculateStatisticsFormWidth.bind(this),
-      getUIText: this.getUIText.bind(this)
+      getUIText: this.getUIText.bind(this),
     });
 
     addKeyHandler(this, this._handleKey.bind(this));

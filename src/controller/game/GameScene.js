@@ -1,15 +1,14 @@
 import Phaser from 'phaser';
 import {APP_CONFIG, APP_FONTS} from '@constants/general.const';
-import {addKeyHandler} from '@utils/ComponentUtils';
-import {Pipe} from '@model/Pipe';
+import Pipe from '@model/Pipe';
 import {changeScene, getRandomNumber} from '@utils/CommonUtils';
-import {Bird} from '@model/Bird';
-import {UI} from '../../constants/ui.const';
+import Bird from '@model/Bird';
+import {UI} from '@constants/ui.const';
 
 const PIPE_DELAY = 2000;
 const BIRD_START_POSITION = {
   x: 50,
-  y: 100
+  y: 100,
 };
 
 export default class GameScene extends Phaser.Scene {
@@ -30,8 +29,6 @@ export default class GameScene extends Phaser.Scene {
     this.pipes = this.add.group({});
     this._addNewRowOfPipes();
     this._addTimer();
-
-    addKeyHandler(this, this._handleKey.bind(this));
   }
 
   update() {
@@ -45,7 +42,7 @@ export default class GameScene extends Phaser.Scene {
       this.pipes,
       this.die,
       null,
-      this
+      this,
     );
   }
 
@@ -58,7 +55,7 @@ export default class GameScene extends Phaser.Scene {
       scene: this,
       x: BIRD_START_POSITION.x,
       y: BIRD_START_POSITION.y,
-      texture: 'bird'
+      texture: 'bird',
     });
   }
 
@@ -66,11 +63,11 @@ export default class GameScene extends Phaser.Scene {
     this.pipes.add(
       new Pipe({
         scene: this,
-        x: x,
-        y: y,
-        frame: frame,
-        texture: 'pipe'
-      })
+        x,
+        y,
+        frame,
+        texture: 'pipe',
+      }),
     );
   }
 
@@ -79,25 +76,25 @@ export default class GameScene extends Phaser.Scene {
     const pipesAmount = this.height / pipeHeight;
     const holeSize = 3;
 
-    let hole = getRandomNumber(1, pipesAmount - holeSize - 1);
+    const hole = getRandomNumber(1, pipesAmount - holeSize - 1);
 
+    // eslint-disable-next-line no-plusplus
     for (let i = 0; i < pipesAmount; i++) {
-      if (i >= hole && i < hole + holeSize) {
-        continue;
+      if (i < hole || i >= hole + holeSize) {
+        let frame;
+        if (i === hole - 1) {
+          frame = 0;
+        } else if (i === hole + holeSize) {
+          frame = 1;
+        } else {
+          frame = 2;
+        }
+        this._addPipe(
+          this.width - APP_CONFIG.edgeMargin,
+          i * pipeHeight,
+          frame,
+        );
       }
-      let frame;
-      if (i === hole - 1) {
-        frame = 0;
-      } else if (i === hole + holeSize) {
-        frame = 1;
-      } else {
-        frame = 2;
-      }
-      this._addPipe(
-        this.width - APP_CONFIG.edgeMargin,
-        i * pipeHeight,
-        frame
-      );
     }
   }
 
@@ -109,19 +106,8 @@ export default class GameScene extends Phaser.Scene {
         this.updateScore();
       },
       callbackScope: this,
-      loop: true
+      loop: true,
     });
-  }
-
-  _handleKey(e) {
-    switch (e.code) {
-      case 'KeyP': {
-        this.onPauseBtnClick();
-        break;
-      }
-      default:
-        break;
-    }
   }
 
   _addScoreText() {
@@ -129,14 +115,10 @@ export default class GameScene extends Phaser.Scene {
       this.width - APP_CONFIG.edgeMargin,
       APP_CONFIG.edgeMargin,
       '',
-      APP_FONTS.small
+      APP_FONTS.small,
     )
       .setOrigin(1, 0)
       .setDepth(2);
-  }
-
-  onPauseBtnClick() {
-    // not implemented
   }
 
   setScore(score = 0) {
@@ -153,8 +135,8 @@ export default class GameScene extends Phaser.Scene {
     this.bird.die();
     Phaser.Actions.Call(
       this.pipes.getChildren(),
-      pipe => pipe.body.setVelocityX(0),
-      this
+      (pipe) => pipe.body.setVelocityX(0),
+      this,
     );
     changeScene('GameOverScene', this, {score: this.score});
   }

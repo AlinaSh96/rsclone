@@ -1,6 +1,8 @@
 import {APP_FONTS} from '@constants/general.const';
 import {changeScene} from '@utils/CommonUtils';
-import {scaleUp, createBackBtn, createBtn, createHeadingText, addKeyHandler, handleMusic} from '@utils/ComponentUtils';
+import {
+  scaleUp, createBackBtn, createBtn, createHeadingText, addKeyHandler, handleMusic,
+} from '@utils/ComponentUtils';
 import {setMusicSetting, setSoundSetting} from '@utils/StorageUtils';
 import {UI} from '../../constants/ui.const';
 import {setLangSetting} from '../../utils/StorageUtils';
@@ -12,7 +14,7 @@ const MARGIN_BOTTOM = 50;
 export default class SettingsScene extends Phaser.Scene {
   constructor() {
     super({
-      key: 'SettingsScene'
+      key: 'SettingsScene',
     });
   }
 
@@ -81,7 +83,7 @@ export default class SettingsScene extends Phaser.Scene {
             ? this._getUIGeneralText().onText
             : this._getUIGeneralText().offText
         }`,
-        onClick: this.onSoundBtnClick.bind(this)
+        onClick: this.onSoundBtnClick.bind(this),
       },
       {
         name: `music${this.registry.get('music') ? 'On' : 'Off'}`,
@@ -90,25 +92,25 @@ export default class SettingsScene extends Phaser.Scene {
             ? this._getUIGeneralText().onText
             : this._getUIGeneralText().offText
         }`,
-        onClick: this.onMusicBtnClick.bind(this)
+        onClick: this.onMusicBtnClick.bind(this),
       },
       {
         name: 'language',
         text: `${this._getUIText().languageText}: ${
           this._getUIGeneralText().name
         }`,
-        onClick: this.onLangBtnClick.bind(this)
+        onClick: this.onLangBtnClick.bind(this),
       },
       {
         name: 'authors',
         text: this._getUIText().authorsText,
-        onClick: this.onAuthorsBtnClick.bind(this)
+        onClick: this.onAuthorsBtnClick.bind(this),
       },
       {
         name: 'shortcuts',
         text: this._getUIText().shortcutsText,
-        onClick: this.onShortcutsBtnClick.bind(this)
-      }
+        onClick: this.onShortcutsBtnClick.bind(this),
+      },
     ].map(({name, onClick, text}) => {
       const btn = createBtn({
         x: offsetLeft,
@@ -117,18 +119,18 @@ export default class SettingsScene extends Phaser.Scene {
         scene: this,
         onClick,
         originY: 0.5,
-        originX: 0.5
+        originX: 0.5,
       });
       const btnText = this._addSettingsText({
         x: offsetLeft + MARGIN_LEFT,
         y: offsetTop,
         text,
-        onClick
+        onClick,
       });
       offsetTop += btn.height + MARGIN_BOTTOM;
       return {
         btn,
-        btnText
+        btnText,
       };
     });
 
@@ -138,7 +140,9 @@ export default class SettingsScene extends Phaser.Scene {
     });
   }
 
-  _addSettingsText({x, y, text, onClick}) {
+  _addSettingsText({
+    x, y, text, onClick,
+  }) {
     return this.add.text(x, y, text, APP_FONTS.base)
       .setOrigin(0, 0.5)
       .setInteractive({useHandCursor: true})
@@ -175,7 +179,6 @@ export default class SettingsScene extends Phaser.Scene {
         : this._getUIGeneralText().offText
     }`;
     this.menuList[0].btn.setTexture(`sound${this.registry.get('sound') ? 'On' : 'Off'}`);
-
   }
 
   onMusicBtnClick() {

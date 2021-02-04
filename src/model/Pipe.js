@@ -3,11 +3,13 @@ import {GAME_OPTIONS} from '@constants/general.const';
 const PIPE_SIZES = {
   width: 20,
   height: 20,
-  scale: 3
+  scale: 3,
 };
 
-export class Pipe extends Phaser.GameObjects.Image {
-  constructor({scene, x, y, texture, frame}) {
+export default class Pipe extends Phaser.GameObjects.Image {
+  constructor({
+    scene, x, y, texture, frame,
+  }) {
     super(scene, x, y, texture, frame);
 
     this.setScale(PIPE_SIZES.scale);

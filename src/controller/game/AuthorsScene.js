@@ -1,6 +1,8 @@
 import {APP_FONTS, AUTHORS, RSS_LINK} from '@constants/general.const';
 import {changeScene} from '@utils/CommonUtils';
-import {scaleUp, createBackBtn, addScalingAnimation, createHeadingText, addKeyHandler} from '@utils/ComponentUtils';
+import {
+  scaleUp, createBackBtn, addScalingAnimation, createHeadingText, addKeyHandler,
+} from '@utils/ComponentUtils';
 import {UI} from '../../constants/ui.const';
 
 const MARGIN_INNER = 30;
@@ -11,7 +13,7 @@ const IMG_INITIAL_SCALE = 0.4;
 export default class AuthorsScene extends Phaser.Scene {
   constructor() {
     super({
-      key: 'AuthorsScene'
+      key: 'AuthorsScene',
     });
   }
 
@@ -39,8 +41,8 @@ export default class AuthorsScene extends Phaser.Scene {
     [
       this.madeByText,
       this.teamTitleText,
-      ...this.authorList
-    ].forEach(obj => scaleUp(this, obj));
+      ...this.authorList,
+    ].forEach((obj) => scaleUp(this, obj));
     scaleUp(this, this.rssImg, 0.1, 0.4);
 
     addKeyHandler(this, this._handleKey.bind(this));
@@ -67,7 +69,7 @@ export default class AuthorsScene extends Phaser.Scene {
       this.width / 2,
       offsetY,
       this._getUIText().madeByText,
-      APP_FONTS.base
+      APP_FONTS.base,
     ).setOrigin(0.5, 0);
   }
 
@@ -75,19 +77,15 @@ export default class AuthorsScene extends Phaser.Scene {
     return this.add.image(
       this.width / 2,
       offsetY,
-      'rss'
+      'rss',
     ).setOrigin(0.5, 0)
       .setScale(0.4)
       .setInteractive({useHandCursor: true})
       .on('pointerup', () => {
         window.open(RSS_LINK, '_blank');
       })
-      .on('pointerover', () =>
-        addScalingAnimation(this, this.rssImg, IMG_SCALE)
-      )
-      .on('pointerout', () =>
-        addScalingAnimation(this, this.rssImg, IMG_INITIAL_SCALE)
-      );
+      .on('pointerover', () => addScalingAnimation(this, this.rssImg, IMG_SCALE))
+      .on('pointerout', () => addScalingAnimation(this, this.rssImg, IMG_INITIAL_SCALE));
   }
 
   _createTeamTitleText(offsetY) {
@@ -95,17 +93,18 @@ export default class AuthorsScene extends Phaser.Scene {
       this.width / 2,
       offsetY,
       this._getUIText().teamTitleText,
-      APP_FONTS.base
+      APP_FONTS.base,
     ).setOrigin(0.5, 0);
   }
 
   _createAuthorsText(offsetY) {
+    let y = offsetY;
     return AUTHORS.map(({name, gitHub}) => {
       const author = this.add.text(
         this.width / 2,
-        offsetY,
+        y,
         name,
-        APP_FONTS.base
+        APP_FONTS.base,
       ).setOrigin(0.5, 0)
         .setInteractive({useHandCursor: true})
         .on('pointerup', () => {
@@ -117,7 +116,7 @@ export default class AuthorsScene extends Phaser.Scene {
         .on('pointerout', function () {
           this.setStyle(APP_FONTS.base);
         });
-      offsetY += author.height + MARGIN_INNER;
+      y += author.height + MARGIN_INNER;
       return author;
     });
   }

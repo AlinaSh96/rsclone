@@ -9,7 +9,7 @@ export const APP_CONFIG = {
 
   maxHeight: 1080,
   edgeMargin: 10,
-  animationDuration: 300
+  animationDuration: 300,
 };
 
 export const COLORS = {
@@ -33,8 +33,8 @@ export const COLORS = {
   textMainBorderDarker: '#FF4B69',
   textSimple: '#000000',
   textSimpleBorder: '#FFFFFF',
-  strokeBase: '#000000'
-}
+  strokeBase: '#000000',
+};
 
 export const GAME_OPTIONS = {
   birdGravity: 1000,
@@ -43,26 +43,27 @@ export const GAME_OPTIONS = {
   pipeHole: [100, 130],
   birdFlapPower: 400, // flap thrust
   localStorageName: 'bestFlappyScore',
-  localStorageSound: 'flappySound',//todo move to app_config
+  localStorageSound: 'flappySound',
   localStorageMusic: 'flappyMusic',
-  localStorageLang: 'flappyLang'
+  localStorageLang: 'flappyLang',
 };
 
+// eslint-disable-next-line no-useless-escape
 const fontFamily = '\"Potta One\"';
 
 export const AUTHORS = [
   {
     name: 'Alina',
-    gitHub: 'https://github.com/AlinaSh96'
+    gitHub: 'https://github.com/AlinaSh96',
   },
   {
     name: 'Anastasia',
-    gitHub: 'https://github.com/ivanova-anastasia'
+    gitHub: 'https://github.com/ivanova-anastasia',
   },
   {
     name: 'Yevgeniya',
-    gitHub: 'https://github.com/yevgeniya-a'
-  }
+    gitHub: 'https://github.com/yevgeniya-a',
+  },
 ];
 
 export const RSS_LINK = 'https://rs.school/js';
@@ -74,7 +75,7 @@ export const APP_FONTS = {
     fill: COLORS.textFocus,
     stroke: COLORS.textMain,
     strokeThickness: 8,
-    align: 'center'
+    align: 'center',
   },
   titleHover: {
     stroke: COLORS.textFocus,
@@ -89,7 +90,7 @@ export const APP_FONTS = {
     align: 'center',
   },
   baseHover: {
-    stroke: COLORS.textFocus
+    stroke: COLORS.textFocus,
   },
   small: {
     fontFamily,
@@ -97,7 +98,7 @@ export const APP_FONTS = {
     fill: COLORS.textMain,
     stroke: COLORS.textMainBorder,
     strokeThickness: 4,
-    align: 'center'
+    align: 'center',
   },
   simple: {
     fontFamily,
@@ -105,13 +106,13 @@ export const APP_FONTS = {
     fill: COLORS.textMain,
     stroke: COLORS.textMainBorder,
     strokeThickness: 5,
-    align: 'center'
+    align: 'center',
   },
   simpleHover: {
     fill: COLORS.textMain,
     stroke: COLORS.textMainBorder,
     strokeThickness: 5,
-  }
+  },
 };
 
 export const BASE_BE_URL = 'https://rsclone-flappy-bird-be.herokuapp.com';

@@ -34,9 +34,7 @@ export default class AuthView {
     this.signUpBtn = document.querySelector('.login-form__sign-up-btn');
     this.guestLoginBtn = document.querySelector('.auth-block__guest-login');
     this.errorElement = document.querySelector('.login-form__error');
-    this.passwordVisibilityCheckbox = document.querySelector(
-      '.login-form__pwd-checkbox'
-    );
+    this.passwordVisibilityCheckbox = document.querySelector('.login-form__pwd-checkbox');
 
     this.setFormWidth(handlers.calcFormWidth());
     this._addEventListeners(handlers);
@@ -47,7 +45,7 @@ export default class AuthView {
   }
 
   handleSignUpClick({login}) {
-    return async (e) => {
+    return async () => {
       const validationErrors = this._validatePassword(this.loginPassword.value);
       if (validationErrors.length > 0) {
         const validationMsg = `${this.handlers.getUIText().passwordMustContainText}: \n${
@@ -58,19 +56,19 @@ export default class AuthView {
       }
       this.errorElement.innerText = '';
 
-      let loginResponseData = await AuthAPIService.register(
+      const loginResponseData = await AuthAPIService.register(
         this.loginInput.value,
-        this.loginPassword.value
+        this.loginPassword.value,
       );
 
       if (loginResponseData.status === 201) {
         const score = [
-          ...(await StatisticsAPIService.getUserStatistics()).data
+          ...(await StatisticsAPIService.getUserStatistics()).data,
         ].sort((a, b) => b.score - a.score)[0];
 
         login({
           user: this.loginInput.value,
-          score: score ? score.score : 0
+          score: score ? score.score : 0,
         });
       } else {
         this.errorElement.innerText = loginResponseData.data.message;
@@ -79,29 +77,25 @@ export default class AuthView {
   }
 
   handleLoginClick({login}) {
-    return async (e) => {
-      let loginResponseData = await AuthAPIService.login(
+    return async () => {
+      const loginResponseData = await AuthAPIService.login(
         this.loginInput.value,
-        this.loginPassword.value
+        this.loginPassword.value,
       );
 
       if (loginResponseData.status === 200) {
         const score = [
-          ...(await StatisticsAPIService.getUserStatistics()).data
+          ...(await StatisticsAPIService.getUserStatistics()).data,
         ].sort((a, b) => b.score - a.score)[0];
 
         login({
           user: this.loginInput.value,
-          score: score ? score.score : 0
+          score: score ? score.score : 0,
         });
       } else {
         this.errorElement.innerText = loginResponseData.data.reason;
       }
     };
-  }
-
-  handleGuestLoginClick({login}) {
-    return (e) => login();
   }
 
   _togglePasswordVisibility() {
@@ -117,15 +111,13 @@ export default class AuthView {
     this.signUpBtn.addEventListener('click', this.handleSignUpClick(handlers));
     this.guestLoginBtn.addEventListener(
       'click',
-      this.handleGuestLoginClick(handlers)
+      () => handlers.login(),
     );
-    this.passwordVisibilityCheckbox.addEventListener('click', () =>
-      this._togglePasswordVisibility()
-    );
+    this.passwordVisibilityCheckbox.addEventListener('click', () => this._togglePasswordVisibility());
   }
 
   _validatePassword(password) {
-    let messages = [];
+    const messages = [];
 
     if (password.length < 6) {
       messages.push(this.handlers.getUIText().minCharsLengthText);

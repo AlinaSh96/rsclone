@@ -4,11 +4,19 @@
     "es6": true,
     "browser": true
   },
+  "globals": {
+    "Phaser": true
+  },
   "extends": [
     "airbnb-base"
   ],
   "rules": {
     "import/no-unresolved": 0,
-    "object-curly-spacing": ["error", "never"]
+    "linebreak-style": 0,
+    "no-underscore-dangle": 0,
+    "object-curly-spacing": [
+      "error",
+      "never"
+    ]
   }
 }

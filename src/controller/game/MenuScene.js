@@ -10,7 +10,7 @@ import {
   jumpFromLeft,
   jumpFromRight,
   jumpFromUp,
-  scaleUp
+  scaleUp,
 } from '@utils/ComponentUtils';
 import {UI} from '../../constants/ui.const';
 
@@ -21,7 +21,7 @@ const MARGIN = 30;
 export default class MenuScene extends Phaser.Scene {
   constructor() {
     super({
-      key: 'MenuScene'
+      key: 'MenuScene',
     });
   }
 
@@ -35,7 +35,7 @@ export default class MenuScene extends Phaser.Scene {
   create() {
     this.settingsBtn = createSettingsBtn(
       this,
-      this.onSettingsBtnClick.bind(this)
+      this.onSettingsBtnClick.bind(this),
     );
     this._createStatisticsBtn();
     this.logoutBtn = this._createLogoutBtn();
@@ -100,7 +100,7 @@ export default class MenuScene extends Phaser.Scene {
       y: APP_CONFIG.edgeMargin,
       name: 'statistics',
       scene: this,
-      onClick: this.onStatisticsBtnClick.bind(this)
+      onClick: this.onStatisticsBtnClick.bind(this),
     });
     jumpFromUp(this, statisticsBtn);
     return statisticsBtn;
@@ -116,7 +116,7 @@ export default class MenuScene extends Phaser.Scene {
       scene: this,
       onClick: this.onLogoutBtnClick.bind(this),
       originX: 1,
-      originY: 0.5
+      originY: 0.5,
     });
     jumpFromUp(this, logoutBtn);
     return logoutBtn;
@@ -140,7 +140,7 @@ export default class MenuScene extends Phaser.Scene {
         `${this._getUIGeneralText().highscoreText}: ${
           this.registry.get('highscore')
         }`,
-        APP_FONTS.base
+        APP_FONTS.base,
       )
       .setOrigin(1, 0);
     scaleUp(this, scoreText);
@@ -155,7 +155,7 @@ export default class MenuScene extends Phaser.Scene {
       targets: birdImg,
       angle: birdImg.angle - BIRD_ANIMATION_ANGLE / 2,
       duration: APP_CONFIG.animationDuration,
-      ease: 'Sine.easeInOut'
+      ease: 'Sine.easeInOut',
     });
     this.tweens.add({
       targets: birdImg,
@@ -165,7 +165,7 @@ export default class MenuScene extends Phaser.Scene {
       ease: 'Sine.easeInOut',
       yoyo: 1,
       loop: -1,
-      delay: APP_CONFIG.animationDuration
+      delay: APP_CONFIG.animationDuration,
     });
     return birdImg;
   }
@@ -176,7 +176,7 @@ export default class MenuScene extends Phaser.Scene {
         this.width / 2,
         (this.height / 5) * 3,
         this._getUIText().playText,
-        APP_FONTS.base
+        APP_FONTS.base,
       )
       .setOrigin(0.5, 0);
     scaleUp(this, playText);
@@ -205,7 +205,7 @@ export default class MenuScene extends Phaser.Scene {
       originY: 1,
       name: 'play',
       scene: this,
-      onClick: this.onPlayBtnClick.bind(this)
+      onClick: this.onPlayBtnClick.bind(this),
     });
     jumpFromRight(this, playBtn);
     return playBtn;
