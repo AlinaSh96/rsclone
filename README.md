@@ -14,6 +14,6 @@ $ npm run start
 * задание: https://github.com/rolling-scopes-school/tasks/blob/master/tasks/rsclone/rsclone.md
 * pr: https://github.com/AlinaSh96/rsclone/pull/11
 * fe-репозиторий: https://github.com/AlinaSh96/rsclone/tree/develop
-* fe-демо: https://chakapega-fancy-weather.netlify.com/
+* fe-демо: https://alinash96.github.io/rsclone/
 * be-репозиторий: https://github.com/ivanova-anastasia/rsclone-be/tree/develop
 * be-демо: https://rsclone-flappy-bird-be.herokuapp.com/docs/
