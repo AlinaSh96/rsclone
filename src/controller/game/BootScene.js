@@ -1,6 +1,7 @@
 import {APP_CONFIG, COLORS} from '@constants/general.const';
 import {changeScene} from '@utils/CommonUtils';
 import WebFont from 'webfontloader';
+import {getMusicSetting, getSoundSetting, setMusicSetting, setSoundSetting} from '@utils/StorageUtils';
 
 const LOADING_BAR = {
   height: 20,
@@ -21,6 +22,15 @@ export default class BootScene extends Phaser.Scene {
   init() {
     this.width = this.cameras.main.width;
     this.height = this.cameras.main.height;
+
+    if (getSoundSetting() === null) {
+      setSoundSetting(1);
+    }
+    if (getMusicSetting() === null) {
+      setMusicSetting(1);
+    }
+    this.registry.set('sound', +getSoundSetting());
+    this.registry.set('music', +getMusicSetting());
   }
 
   preload() {

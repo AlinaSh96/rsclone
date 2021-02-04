@@ -1,7 +1,7 @@
 import GameScene from '@controller/game/GameScene';
 import MenuScene from '@controller/game/MenuScene';
 import BootScene from '@controller/game/BootScene';
-import {APP_CONFIG, COLORS} from '@constants/general.const';
+import {COLORS} from '@constants/general.const';
 import AuthScene from '@controller/game/AuthScene';
 import SettingsScene from '@controller/game/SettingsScene';
 import AuthorsScene from '@controller/game/AuthorsScene';
@@ -9,25 +9,8 @@ import ShortcutsScene from '@controller/game/ShortcutsScene';
 import GameOverScene from '@controller/game/GameOverScene';
 import StatisticsScene from '@controller/game/StatisticsScene';
 
-const calcAppWidth = () => {
-  const width = window.innerWidth
-    || document.documentElement.clientWidth;
-  return Math.min(width, APP_CONFIG.maxWidth);
-}
-
-const calcAppHeight = () => {
-  let height = window.innerHeight
-    || document.documentElement.clientHeight;
-  return Math.min(height, APP_CONFIG.maxHeight);
-}
-
-const width = calcAppWidth();
-const height = calcAppHeight();
-
 export const gameConfig = {
-  // width, // Width of the game in pixels
-  // height, // Height of the game in pixels
-  backgroundColor: COLORS.mainBckg, // The background color
+  backgroundColor: COLORS.mainBckg,
   scale: {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,
@@ -37,15 +20,15 @@ export const gameConfig = {
   input: {
     keyboard: true
   },
-  physics: { // The type of physics engine to use
-    default: 'arcade', // Use simple arcade-style physics engine
+  physics: {
+    default: 'arcade',
     arcade: {
       gravity: {
-        y: 0 // Vertical gravity for the whole scene // todo 300
+        y: 0
       }
     }
   },
-  parent: 'game', // Create the game inside the <div id='game'>
+  parent: 'game',
   scene: [
     BootScene,
     AuthScene,
@@ -57,6 +40,11 @@ export const gameConfig = {
     GameOverScene,
     StatisticsScene
   ],
-  audio: {disableWebAudio: true}, // Use HTML5 audio instead of WebAudio
-  render: {pixelArt: true, antialias: false}
+  audio: {
+    disableWebAudio: true
+  },
+  render: {
+    pixelArt: true,
+    antialias: false
+  }
 };

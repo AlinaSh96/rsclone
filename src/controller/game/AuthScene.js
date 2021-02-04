@@ -4,6 +4,7 @@ import {
   addKeyHandler,
   createSettingsBtn,
   createTitleText,
+  handleMusic
 } from '@utils/ComponentUtils';
 import { setBestScore } from '@utils/StorageUtils';
 
@@ -17,11 +18,13 @@ export default class AuthScene extends Phaser.Scene {
   }
 
   init() {
-    this.width = this.sys.canvas.width; // this.cameras.main.width
+    this.width = this.sys.canvas.width;
     this.height = this.sys.canvas.height;
   }
 
   create() {
+    handleMusic(this);
+
     createSettingsBtn(this, this.onSettingsBtnClick.bind(this));
     createTitleText(this);
 

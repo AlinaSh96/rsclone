@@ -14,11 +14,6 @@ export const createSvgObject = (
     Your browser does not support SVG
 </object>`;
 
-export const createIcon = (name, ...classList) =>
-  `<i class="material-icons ${
-    classList ? classList.join(' ') : ''
-  }">${name}</i>`;
-
 export const setElementVariable = (element, name, value) =>
   element.style.setProperty(name, value);
 

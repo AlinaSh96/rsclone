@@ -1,4 +1,5 @@
 import {GAME_OPTIONS} from '@constants/general.const';
+import {playSound} from '@utils/ComponentUtils';
 
 const BIRD_FLY_DURATION = 100;
 const MAX_ANGLE = 30;
@@ -46,6 +47,13 @@ export class Bird extends Phaser.GameObjects.Image {
 
     if (this.y + this.height > this.scene.sys.canvas.height
       || this.y < -this.height) {
+      this.die();
+    }
+  }
+
+  die() {
+    if (!this.dead) {
+      playSound(this.scene, 'die');
       this.dead = true;
     }
   }
@@ -55,6 +63,7 @@ export class Bird extends Phaser.GameObjects.Image {
   }
 
   fly() {
+    playSound(this.scene, 'main');
     this.flies = true;
     this.body.setVelocityY(-GAME_OPTIONS.birdFlapPower);
     this.scene.tweens.add({

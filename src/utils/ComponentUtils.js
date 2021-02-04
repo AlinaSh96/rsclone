@@ -95,7 +95,10 @@ export const createBtn = ({x, y, name, scene, onClick, originX = 0, originY = 0}
   x, y, name
 ).setOrigin(originX, originY)
   .setInteractive({useHandCursor: true})
-  .on('pointerdown', onClick)
+  .on('pointerdown', () => {
+    playSound(scene, 'button');
+    onClick();
+  })
   .on('pointerover', function () {
     this.setFrame(1);
   })
@@ -135,3 +138,34 @@ export const createHeadingText = (scene, titleText) => scene.add.text(
 ).setOrigin(0.5, 0);
 
 export const addKeyHandler = (scene, handler) => scene.input.keyboard.on('keydown', handler, scene);
+
+export const playSound = (scene, name) => {
+  const sound = scene.sound.add(name);
+  if (scene.registry.get('sound')) {
+    sound.play();
+  }
+};
+
+export const handleMusic = scene => {
+  if (scene.registry.get('music')) {
+    playMusic(scene);
+  } else {
+    stopMusic(scene);
+  }
+};
+
+const playMusic = (scene) => {
+  if (!scene.registry.get('playing')) {
+    const music = scene.sound.add('music', {loop: true});
+    scene.registry.set('playing', music);
+    music.play();
+  }
+};
+
+const stopMusic = (scene) => {
+  const music = scene.registry.get('playing');
+  if (music) {
+    music.stop();
+    scene.registry.set('playing', null);
+  }
+}

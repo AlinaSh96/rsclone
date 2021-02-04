@@ -1,6 +1,5 @@
 import Phaser from 'phaser';
 import {APP_CONFIG, APP_FONTS} from '@constants/general.const';
-import {setBestScore} from '@utils/StorageUtils';
 import {addKeyHandler} from '@utils/ComponentUtils';
 import {Pipe} from '@model/Pipe';
 import {changeScene, getRandomNumber} from '@utils/CommonUtils';
@@ -35,20 +34,6 @@ export default class GameScene extends Phaser.Scene {
   }
 
   update() {
-    //   if (this.pipeTop.getBounds().right < 0) {
-    //     this.pipeTop.x = 320 + 30;
-    //     this.pipeBottom.x = 320 + 30;
-    //     let pipeHoleHeight = Phaser.Math.Between(GAME_OPTIONS.pipeHole[0],
-    //       GAME_OPTIONS.pipeHole[1]); // Random gap size
-    //     let pipeHolePosition = Phaser.Math.Between(GAME_OPTIONS.minPipeHeight
-    //       + pipeHoleHeight / 2,
-    //       480 - GAME_OPTIONS.minPipeHeight - pipeHoleHeight / 2);
-    //     this.pipeTop.y = pipeHolePosition - pipeHoleHeight / 2;
-    //     this.pipeBottom.y = pipeHolePosition + pipeHoleHeight / 2;
-    //     this.updateScore();
-    //   }
-    //
-
     if (this.bird.isDead()) {
       this.die();
       return;
@@ -159,6 +144,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   die() {
+    this.bird.die();
     Phaser.Actions.Call(
       this.pipes.getChildren(),
       pipe => pipe.body.setVelocityX(0),

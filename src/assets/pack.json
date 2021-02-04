@@ -18,11 +18,6 @@
       },
       {
         "type": "audio",
-        "key": "finish",
-        "url": ["./assets/audio/finish.wav"]
-      },
-      {
-        "type": "audio",
         "key": "die",
         "url": ["./assets/audio/die.wav"]
       },
@@ -30,6 +25,11 @@
         "type": "audio",
         "key": "music",
         "url": ["./assets/audio/music.mp3"]
+      },
+      {
+        "type": "audio",
+        "key": "button",
+        "url": ["./assets/audio/button.mp3"]
       },
       {
         "type": "spritesheet",

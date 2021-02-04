@@ -1,7 +1,7 @@
 import {APP_FONTS} from '@constants/general.const';
 import {changeScene} from '@utils/CommonUtils';
-import {scaleUp, createBackBtn, createBtn, createHeadingText, addKeyHandler} from '@utils/ComponentUtils';
-import {getMusicSetting, getSoundSetting, setMusicSetting, setSoundSetting} from '@utils/StorageUtils';
+import {scaleUp, createBackBtn, createBtn, createHeadingText, addKeyHandler, handleMusic} from '@utils/ComponentUtils';
+import {setMusicSetting, setSoundSetting} from '@utils/StorageUtils';
 
 const HEADING_TEXT = 'Settings';
 const DEFAULT_REDIRECT_SCENE = 'AuthScene';
@@ -19,15 +19,6 @@ export default class SettingsScene extends Phaser.Scene {
     this.width = this.sys.canvas.width;
     this.height = this.sys.canvas.height;
     this.redirectScene = data.scene || DEFAULT_REDIRECT_SCENE;
-
-    if (getSoundSetting() === null) {
-      setSoundSetting(1);
-    }
-    if (getMusicSetting() === null) {
-      setMusicSetting(1);
-    }
-    this.registry.set('sound', +getSoundSetting());
-    this.registry.set('music', +getMusicSetting());
   }
 
   create() {
@@ -149,6 +140,7 @@ export default class SettingsScene extends Phaser.Scene {
     setMusicSetting(this.registry.get('music'));
     this.menuList[1].btnText.text = `Music: ${this.registry.get('music') ? 'ON' : 'OFF'}`;
     this.menuList[1].btn.setTexture(`music${this.registry.get('music') ? 'On' : 'Off'}`);
+    handleMusic(this);
   }
 
   onAuthorsBtnClick() {
