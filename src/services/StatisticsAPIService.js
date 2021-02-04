@@ -5,6 +5,20 @@ import { getAuthToken } from '@utils/StorageUtils';
 const baseAuthUrl = `${BASE_BE_URL}/statistics`;
 
 export default {
+  async getAllUsersStatistics() {
+    let response = null;
+
+    try {
+      response = await axios({
+        method: 'get',
+        baseURL: baseAuthUrl,
+        url: '/all',
+      });
+      return response;
+    } catch (error) {
+      return error.response;
+    }
+  },
   async getUserStatistics() {
     const headers = { Authorization: getAuthToken() };
     let response = null;
