@@ -12,6 +12,11 @@
         "url": "./assets/icons/rs_school_js.png"
       },
       {
+        "type": "image",
+        "key": "town",
+        "url": "./assets/images/town.png"
+      },
+      {
         "type": "audio",
         "key": "main",
         "url": ["./assets/audio/main.wav"]
