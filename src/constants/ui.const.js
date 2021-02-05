@@ -137,7 +137,7 @@ export const UI = {// eslint-disable-line import/prefer-default-export
           title: 'Hauptmenü',
           shortcuts: [
             'S - Einstellungen auf/aus',
-            'T - SStatistiken auf/aus',
+            'T - Statistiken auf/aus',
             'Leertaste - Spiel/Als Gast eingeben',
             'X - Ausloggen',
           ],

@@ -1,4 +1,6 @@
-import {APP_CONFIG, APP_FONTS, RSS_LINK} from '@constants/general.const';
+import {
+  APP_CONFIG, APP_FONTS, GAME_OPTIONS, RSS_LINK,
+} from '@constants/general.const';
 import {getBestScore} from '@utils/StorageUtils';
 import {changeScene} from '@utils/CommonUtils';
 import {
@@ -12,11 +14,13 @@ import {
   jumpFromUp,
   scaleUp,
 } from '@utils/ComponentUtils';
-import {UI} from '../../constants/ui.const';
+import {UI} from '@constants/ui.const';
 
 const BIRD_ANIMATION_ANGLE = 14;
 const BIRD_ANIMATION_OFFSET = 50;
 const MARGIN = 30;
+const TOWN_HEIGHT = 128;
+const SPEED_RATE = 5000;
 
 export default class MenuScene extends Phaser.Scene {
   constructor() {
@@ -41,6 +45,7 @@ export default class MenuScene extends Phaser.Scene {
     this.logoutBtn = this._createLogoutBtn();
     this._createLoginText();
     this._createHighscoreText();
+    this.town = this._createTownImg();
     createTitleText(this);
     this._createBirdImg();
     this._createPlayText();
@@ -48,6 +53,10 @@ export default class MenuScene extends Phaser.Scene {
     this._createPlayBtn();
 
     addKeyHandler(this, this._handleKey.bind(this));
+  }
+
+  update(time, delta) {
+    this.town.tilePositionX -= (delta * GAME_OPTIONS.birdSpeed) / SPEED_RATE;
   }
 
   _handleKey(e) {
@@ -168,6 +177,16 @@ export default class MenuScene extends Phaser.Scene {
       delay: APP_CONFIG.animationDuration,
     });
     return birdImg;
+  }
+
+  _createTownImg() {
+    return this.add.tileSprite(
+      0,
+      this.height / 2,
+      this.width,
+      TOWN_HEIGHT,
+      'town',
+    ).setOrigin(0, 0.5);
   }
 
   _createPlayText() {
