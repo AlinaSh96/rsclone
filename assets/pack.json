@@ -38,6 +38,15 @@
       },
       {
         "type": "spritesheet",
+        "key": "clouds",
+        "url": "./assets/images/sprites/clouds.png",
+        "frameConfig": {
+          "frameWidth": 64,
+          "frameHeight": 34
+        }
+      },
+      {
+        "type": "spritesheet",
         "key": "pipe",
         "url": "./assets/images/sprites/pipe.png",
         "frameConfig": {
