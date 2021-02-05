@@ -12,6 +12,8 @@ const BIRD_START_POSITION = {
 };
 const TOWN_HEIGHT = 128;
 const SPEED_RATE = 5000;
+const CLOUD_SPAWN_MIN_TIME = 3000;
+const CLOUD_SPAWN_MAX_TIME = 10000;
 
 export default class GameScene extends Phaser.Scene {
   constructor() {
@@ -32,6 +34,7 @@ export default class GameScene extends Phaser.Scene {
     this.pipes = this.add.group({});
     this._addNewRowOfPipes();
     this._addTimer();
+    this._addClouds();
   }
 
   update(time, delta) {
@@ -154,5 +157,41 @@ export default class GameScene extends Phaser.Scene {
       this,
     );
     changeScene('GameOverScene', this, {score: this.score});
+  }
+
+  _addClouds() {
+    const makeNewCloud = (cloudX = this.width, startTimer = true) => {
+      const cloudY = getRandomNumber(0, this.height / 2);
+      const cloud = this.clouds.create(cloudX, cloudY, 'clouds', getRandomNumber(0, 21));
+      const cloudScale = getRandomNumber(1, 4);
+
+      cloud.alpha = (1 / cloudScale) * 2;
+      cloud.setScale(cloudScale);
+      this.physics.world.enable(cloud);
+      cloud.body.allowGravity = false;
+      cloud.body.setGravity(false);
+      cloud.body.velocity.x = (-GAME_OPTIONS.birdSpeed / cloudScale) * 0.5;
+      cloud.setOrigin(0, 0.5);
+
+      if (startTimer) {
+        this.time.addEvent({
+          delay: Phaser.Math.RND.integerInRange(CLOUD_SPAWN_MIN_TIME, CLOUD_SPAWN_MAX_TIME),
+          callback: makeNewCloud,
+          loop: false,
+        });
+      }
+    };
+
+    this.clouds = this.add.group();
+    let cloudX = 0;
+    while (cloudX < this.width) {
+      makeNewCloud(cloudX, false);
+      cloudX += getRandomNumber(0, 100);
+    }
+
+    this.time.addEvent({
+      callback: makeNewCloud,
+      loop: false,
+    });
   }
 }
