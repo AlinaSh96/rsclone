@@ -5,15 +5,21 @@ import {changeScene, getRandomNumber} from '@utils/CommonUtils';
 import Bird from '@model/Bird';
 import {UI} from '@constants/ui.const';
 
-const PIPE_DELAY = 2000;
 const BIRD_START_POSITION = {
   x: 50,
   y: 100,
 };
 const TOWN_HEIGHT = 128;
-const SPEED_RATE = 5000;
+const SPEED_RATE = 5;
+const MILLISECS = 1000;
 const CLOUD_SPAWN_MIN_TIME = 3000;
 const CLOUD_SPAWN_MAX_TIME = 10000;
+const PIPE_HEIGHT = 60;
+const PIPE_SPAWN_MIN_TIME = 2000;
+const PIPE_SPAWN_MAX_TIME = 3500;
+const PIPE_HOLE_MIN = 3;
+const PIPE_HOLE_MAX = 6;
+const DIFFICULTY_MAX = 100;
 
 export default class GameScene extends Phaser.Scene {
   constructor() {
@@ -32,7 +38,6 @@ export default class GameScene extends Phaser.Scene {
     this.town = this._addTown();
     this.bird = this._addBird();
     this.pipes = this.add.group({});
-    this._addNewRowOfPipes();
     this._addTimer();
     this._addClouds();
   }
@@ -51,7 +56,7 @@ export default class GameScene extends Phaser.Scene {
       this,
     );
 
-    this.town.tilePositionX -= (delta * GAME_OPTIONS.birdSpeed) / SPEED_RATE;
+    this.town.tilePositionX -= (delta * GAME_OPTIONS.birdSpeed) / (SPEED_RATE * MILLISECS);
   }
 
   _getUIText() {
@@ -90,10 +95,9 @@ export default class GameScene extends Phaser.Scene {
   }
 
   _addNewRowOfPipes() {
-    const pipeHeight = 60;
-    const pipesAmount = this.height / pipeHeight;
-    const holeSize = 3;
-
+    this.updateScore();
+    const pipesAmount = this.height / PIPE_HEIGHT;
+    const holeSize = this._calculatePipeHoleDifficulty();
     const hole = getRandomNumber(1, pipesAmount - holeSize - 1);
 
     // eslint-disable-next-line no-plusplus
@@ -109,22 +113,28 @@ export default class GameScene extends Phaser.Scene {
         }
         this._addPipe(
           this.width - APP_CONFIG.edgeMargin,
-          i * pipeHeight,
+          i * PIPE_HEIGHT,
           frame,
         );
       }
     }
+
+    const delay = Phaser.Math.RND.integerInRange(PIPE_SPAWN_MIN_TIME, PIPE_SPAWN_MAX_TIME)
+      - this._calculateGameSpeed() * 2;
+    this.time.addEvent({
+      delay,
+      callback: this._addNewRowOfPipes.bind(this),
+    });
+  }
+
+  _calculateGameSpeed() {
+    return GAME_OPTIONS.birdSpeed + this.score * SPEED_RATE;
   }
 
   _addTimer() {
     return this.time.addEvent({
-      delay: PIPE_DELAY,
-      callback: () => {
-        this._addNewRowOfPipes();
-        this.updateScore();
-      },
-      callbackScope: this,
-      loop: true,
+      delay: 0,
+      callback: this._addNewRowOfPipes.bind(this),
     });
   }
 
@@ -193,5 +203,13 @@ export default class GameScene extends Phaser.Scene {
       callback: makeNewCloud,
       loop: false,
     });
+  }
+
+  _calculatePipeHoleDifficulty() {
+    return Math.round(
+      PIPE_HOLE_MIN
+      + getRandomNumber(0, PIPE_HOLE_MAX - PIPE_HOLE_MIN)
+      * (this.score / (DIFFICULTY_MAX + 1)),
+    );
   }
 }
