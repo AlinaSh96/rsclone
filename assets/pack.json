@@ -165,6 +165,15 @@
           "frameWidth": 52,
           "frameHeight": 52
         }
+      },
+      {
+        "type": "spritesheet",
+        "key": "language",
+        "url": "./assets/icons/language.png",
+        "frameConfig": {
+          "frameWidth": 72,
+          "frameHeight": 72
+        }
       }
     ]
   }
