@@ -9,7 +9,7 @@ import ShortcutsScene from '@controller/game/ShortcutsScene';
 import GameOverScene from '@controller/game/GameOverScene';
 import StatisticsScene from '@controller/game/StatisticsScene';
 
-export const gameConfig = {
+const gameConfig = {
   backgroundColor: COLORS.mainBckg,
   scale: {
     mode: Phaser.Scale.FIT,
@@ -48,3 +48,5 @@ export const gameConfig = {
     antialias: false,
   },
 };
+
+export default gameConfig;

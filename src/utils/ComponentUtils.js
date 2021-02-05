@@ -16,6 +16,13 @@ const stopMusic = (scene) => {
   }
 };
 
+export const playSound = (scene, name) => {
+  const sound = scene.sound.add(name);
+  if (scene.registry.get('sound')) {
+    sound.play();
+  }
+};
+
 export const createBtn = ({
   x, y, name, scene, onClick, originX = 0, originY = 0,
 }) => scene.add.image(
@@ -156,13 +163,6 @@ export const createHeadingText = (scene, titleText) => scene.add.text(
 ).setOrigin(0.5, 0);
 
 export const addKeyHandler = (scene, handler) => scene.input.keyboard.on('keydown', handler, scene);
-
-export const playSound = (scene, name) => {
-  const sound = scene.sound.add(name);
-  if (scene.registry.get('sound')) {
-    sound.play();
-  }
-};
 
 export const handleMusic = (scene) => {
   if (scene.registry.get('music')) {

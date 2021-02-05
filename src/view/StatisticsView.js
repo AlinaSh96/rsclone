@@ -54,7 +54,13 @@ export default class StatisticsView {
         let result;
         if (dir === 'asc') {
           if (n === 1) {
-            result = parseInt(x.innerHTML.toLowerCase(), 10) > parseInt(y.innerHTML.toLowerCase(), 10);
+            result = parseInt(
+              x.innerHTML.toLowerCase(),
+              10,
+            ) > parseInt(
+              y.innerHTML.toLowerCase(),
+              10,
+            );
           } else {
             result = x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase();
           }
@@ -64,7 +70,13 @@ export default class StatisticsView {
           }
         } else if (dir === 'desc') {
           if (n === 1) {
-            result = parseInt(x.innerHTML.toLowerCase(), 10) < parseInt(y.innerHTML.toLowerCase(), 10);
+            result = parseInt(
+              x.innerHTML.toLowerCase(),
+              10,
+            ) < parseInt(
+              y.innerHTML.toLowerCase(),
+              10,
+            );
           } else {
             result = x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase();
           }
@@ -85,25 +97,26 @@ export default class StatisticsView {
     }
   }
 
+  // eslint-disable-next-line class-methods-use-this
   async getUsersData() {
+    const fillTable = (records) => {
+      const tableRows = [];
+      records.forEach((record) => {
+        const tr = createElement('tr');
+        const tdName = createElement('td');
+        tdName.innerText = record.user;
+
+        const tsScore = createElement('td');
+        tsScore.innerText = record.score;
+        tr.append(tdName, tsScore);
+
+        tableRows.push(tr);
+      });
+      return tableRows;
+    };
+
     const userData = await StatisticsAPIService.getAllUsersStatistics();
-    return this.fillTable(userData.data);
-  }
-
-  fillTable(records) {
-    const tableRows = [];
-    records.forEach((record) => {
-      const tr = createElement('tr');
-      const tdName = createElement('td');
-      tdName.innerText = record.user;
-
-      const tsScore = createElement('td');
-      tsScore.innerText = record.score;
-      tr.append(tdName, tsScore);
-
-      tableRows.push(tr);
-    });
-    return tableRows;
+    return fillTable(userData.data);
   }
 
   setFormWidth(width) {

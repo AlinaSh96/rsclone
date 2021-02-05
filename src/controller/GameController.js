@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import {gameConfig} from '@controller/game/GameConfig';
+import gameConfig from '@controller/game/GameConfig';
 
 export default class GameController {
   start() {

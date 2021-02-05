@@ -135,11 +135,11 @@ module.exports = {
   },
   module: {
     rules: [
-      // {
-      //   enforce: 'pre',
-      //   test: /\.js$/,
-      //   loader: 'eslint-loader'
-      // },
+      {
+        enforce: 'pre',
+        test: /\.js$/,
+        loader: 'eslint-loader'
+      },
       {
         test: /\.css$/,
         use: cssLoaders(),

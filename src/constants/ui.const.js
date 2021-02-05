@@ -1,4 +1,4 @@
-export const UI = {
+export const UI = {// eslint-disable-line import/prefer-default-export
   en: {
     name: 'Eng',
     onText: 'ON',
